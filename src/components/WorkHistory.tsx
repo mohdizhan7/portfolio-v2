@@ -103,11 +103,7 @@ export default function WorkHistory() {
 
   return (
     <section id="work" style={{
-      minHeight: '100vh',
-      padding: '120px 48px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      padding: '120px 48px 80px',
     }}>
       <div style={{ maxWidth: 1200, width: '100%', margin: '0 auto' }}>
 

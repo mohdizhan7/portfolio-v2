@@ -9,11 +9,7 @@ export default function Contact() {
 
   return (
     <section id="contact" style={{
-      minHeight: '60vh',
-      padding: '120px 48px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      padding: '120px 48px 100px',
       borderTop: '1px solid var(--line)',
     }}>
       <div style={{ maxWidth: 1200, width: '100%', margin: '0 auto' }} ref={ref}>
