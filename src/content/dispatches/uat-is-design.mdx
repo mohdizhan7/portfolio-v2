@@ -1,0 +1,41 @@
+Most people treat UAT as a quality gate. Run the test scenarios, log the defects, sign off the document, go live.
+
+I treat it as the last design phase.
+
+This distinction changes everything — how you structure the sessions, who you involve, what you do with what you find, and how you measure whether it worked.
+
+## The Standard Approach and Its Failure Mode
+
+The standard UAT approach goes like this: developers build the system, business analysts write test scripts, end users execute the scripts, defects get logged, critical ones get fixed, the rest get deferred, sign-off happens, go live.
+
+The problem with this model is that it positions users as testers of a finished product. Their job is to find bugs, not to shape the system. Their feedback is filtered through a defect log. Design decisions made six months ago are immovable because the build is done.
+
+The result: systems that pass UAT and still fail in production. Not because of technical defects — because of design defects that no test script could have caught.
+
+## What UAT Actually Surfaces
+
+When I ran UAT for HUL Samadhan across three distribution hubs, I structured it differently. Each site got a two-week immersive session, not a script-execution exercise. Users ran live operations — real orders, real inventory, real pressure — with the new system alongside the old one.
+
+What we found in week one of each site had nothing to do with defects. It was about workflow fit.
+
+The system was technically correct. The picking sequence logic, the bin assignment, the sortation rules — all working as specified. But the way warehouse supervisors naturally wanted to manage exceptions — the moment a bin overflowed, or a SKU was misplaced — the system's exception handling flow didn't match their mental model.
+
+No test script would have surfaced this. It required watching people use the system under real pressure and asking: "What are you trying to do right now?"
+
+## Redesigning in UAT
+
+We made 11 significant workflow adjustments during UAT. Not bug fixes — design changes. Exception screens were restructured. Confirmation flows were shortened. One entire sub-process was reordered because supervisors consistently tried to do step 3 before step 2.
+
+Each change went back to the development team with a two-day turnaround SLA. By the end of UAT at each site, the system had been materially improved — not just validated.
+
+**Go-live across all three sites ran without a single day of downtime. Forty percent throughput increase. Zero operational regressions.**
+
+## The Principle
+
+UAT is the moment when real users interact with your design under real conditions for the first time. That moment contains more design information than any amount of upfront research.
+
+The question is whether you've created a process that can receive that information and act on it — or whether you've created a process designed to conclude that everything is fine.
+
+If your UAT produces zero design changes, one of two things is true: you designed a perfect system, or you designed a UAT process that couldn't hear what users were saying.
+
+One of those is more likely.

@@ -1,0 +1,37 @@
+Before I redesign any warehouse process, I spend time on the floor watching it run.
+
+Not interviewing people about it. Not reviewing the data first. Watching. For days.
+
+This sounds obvious. It isn't. Most process redesign work starts with a spreadsheet or a stakeholder meeting. The assumption is that the people who built the system understand it best — and that understanding transfers cleanly through conversation.
+
+It doesn't.
+
+## What Data Misses
+
+When I started the picking workflow project at Edgistify's Delhi hub, the operations dashboard showed reasonable numbers. Pick rates were within target. Utilisation was high. Nothing obviously broken.
+
+I spent three weeks on the floor anyway.
+
+What I found: pickers were walking an average of 14 kilometres per shift — roughly twice what the system assumed. Not because they were slow. Because the batch assignment logic was grouping picks by order, not by aisle proximity. A single 50-unit batch might send a picker from Aisle A to Aisle K to Aisle C, then back to Aisle G. The system was optimising for order completeness. The floor was paying for it in footsteps.
+
+No one had flagged this. It had become normal. When you do something the same way every day, you stop seeing it as a choice.
+
+## The Batching Redesign
+
+The fix was conceptually simple: group picks by zone proximity first, order completeness second. Pickers would complete a zone before moving to the next. Batch sizes stayed the same. Routes changed entirely.
+
+What took time was the retraining. Pickers had muscle memory built around the old flow. The first week felt slower. The data looked worse before it looked better. This is the part redesign projects usually underestimate — the transition cost is real, and it requires sustained attention, not just a new process document.
+
+By week four, pick cycle time had dropped from 8 minutes to 6 minutes per 50-unit batch.
+
+**25% productivity gain. 160 additional picks per picker per shift. ROI in 90 days.**
+
+## Why the Floor Comes First
+
+Data tells you what is happening. The floor tells you why.
+
+I could have found the batching inefficiency in the data — but I would have found it as a hypothesis, not a confirmed root cause. On the floor, I watched it happen. I walked the routes with the pickers. I understood the problem in my legs before I understood it in my head.
+
+This matters because the solution you design on a whiteboard is shaped by how deeply you understand the problem. A shallow understanding produces a solution that addresses symptoms. Floor time produces solutions that address causes.
+
+Every process I've shipped with lasting results started with watching before designing. The floor doesn't lie. It just requires the patience to listen.

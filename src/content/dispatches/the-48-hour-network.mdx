@@ -1,0 +1,37 @@
+It was April 2020. Mumbai had been under lockdown for three weeks, and 150,000 shipments were stacked floor-to-ceiling at my DTDC branch. The last-mile had collapsed. Delivery partners had stopped showing up. Vehicles were grounded. And every day, the pile grew.
+
+Most managers were waiting for instructions from above. I decided to build a network from scratch.
+
+## The Problem Was Structural, Not Operational
+
+The first thing I realised was that this wasn't a manpower problem. It was a network design problem. Our standard delivery model depended on franchise partners who had their own constraints — vehicles, staff, compliance. When those constraints broke, the whole chain broke with them.
+
+What we had instead was a city full of people on two-wheelers with no work.
+
+## Building the Network in 48 Hours
+
+I spent the first day on the phone. Not with corporate. With auto-rickshaw unions, delivery gig workers, and small logistics brokers. I negotiated per-shipment rates on the spot — no contracts, just handshakes and WhatsApp confirmations.
+
+By the end of day two, I had 60+ two-wheeler partners ready to ride.
+
+The routing was done entirely in Google Sheets. I partitioned the city into 12 micro-zones, assigned partners to zones based on their home locations, and built daily manifests by hand. It wasn't elegant. It worked.
+
+## What the Numbers Showed
+
+Over seven days, we cleared the entire 150,000-shipment backlog.
+
+- **98% on-time delivery** across the operation
+- **Less than 0.5% damage rate** — better than our normal benchmark
+- **Zero customer escalations** from the backlog period
+
+The operation became a case study shared across DTDC zones. Three other branches replicated the model during subsequent lockdown waves.
+
+## What I Learned
+
+**Speed of iteration beats perfection of design.** A working routing sheet in Google Sheets on day two is worth more than a perfectly optimised dispatch system on day ten.
+
+**The bottleneck is almost never where you think it is.** Everyone assumed the problem was vehicle shortage. It wasn't. It was partner dependency — a network design choice that made sense in normal conditions and became a single point of failure under stress.
+
+**Operations under pressure reveal your actual system.** The crisis didn't break anything that wasn't already fragile. It just made the fragility visible faster.
+
+The lesson I took forward: design systems that degrade gracefully. When the primary network fails, what's the fallback? If you don't have an answer, you don't have a complete design.
