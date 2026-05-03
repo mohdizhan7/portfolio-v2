@@ -62,9 +62,9 @@ function JobCard({ job, index }: { job: typeof jobs[0]; index: number }) {
       initial={{ opacity: 0, x: -48 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
-      onClick={() => setExpanded(v => !v)}
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => setExpanded(false)}
       className={`exp__item${expanded ? ' is-expanded' : ''}`}
-      style={{ cursor: 'pointer' }}
     >
       <div className="exp__image-wrap">
         <div className="exp__image">
