@@ -103,9 +103,9 @@ export default function WorkHistory() {
 
   return (
     <section id="work" style={{
-      padding: '120px 48px 80px',
+      padding: '80px 64px 60px',
     }}>
-      <div style={{ maxWidth: 1200, width: '100%', margin: '0 auto' }}>
+      <div style={{ maxWidth: 1100, width: '100%', margin: '0 auto' }}>
 
         <motion.div
           ref={headerRef}

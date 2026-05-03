@@ -10,7 +10,7 @@ export default function Nav() {
     <>
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0,
-        zIndex: 100, padding: '20px 48px',
+        zIndex: 100, padding: '20px 64px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         background: 'transparent',
         borderBottom: '1px solid var(--fg-2)',

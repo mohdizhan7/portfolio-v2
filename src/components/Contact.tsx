@@ -9,10 +9,10 @@ export default function Contact() {
 
   return (
     <section id="contact" style={{
-      padding: '120px 48px 100px',
+      padding: '80px 64px 80px',
       borderTop: '1px solid var(--line)',
     }}>
-      <div style={{ maxWidth: 1200, width: '100%', margin: '0 auto' }} ref={ref}>
+      <div style={{ maxWidth: 1100, width: '100%', margin: '0 auto' }} ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

@@ -46,7 +46,7 @@ export default function Hero() {
   return (
     <section className="hero-padding" style={{
       minHeight: '100vh',
-      padding: '0 48px',
+      padding: '0 64px',
       display: 'flex',
       alignItems: 'center',
       position: 'relative',
@@ -67,7 +67,7 @@ export default function Hero() {
         transform: 'translate(calc(50vw - 250px), calc(50vh - 250px))',
       }} />
 
-      <div style={{ maxWidth: 1200, width: '100%', margin: '0 auto', position: 'relative', zIndex: 1, paddingTop: 64 }}>
+      <div style={{ maxWidth: 1100, width: '100%', margin: '0 auto', position: 'relative', zIndex: 1, paddingTop: 64 }}>
 
         {/* Topbar */}
         <motion.div
