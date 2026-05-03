@@ -29,14 +29,15 @@ export default function Nav() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           {/* CV */}
-          <a href="/resume/Resume_Izhan.pdf" target="_blank" rel="noreferrer"
+          <a href="/resume.pdf" target="_blank" rel="noreferrer"
             style={{ color: 'var(--fg)', display: 'flex', alignItems: 'center', transition: 'opacity 0.2s' }}
             title="View CV">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
-              <line x1="12" y1="11" x2="12" y2="17"/>
-              <line x1="9" y1="14" x2="15" y2="14"/>
+              <text x="7" y="17" fontSize="5.5" fontWeight="700" stroke="none" fill="currentColor" fontFamily="sans-serif">CV</text>
+              <line x1="7" y1="19.5" x2="17" y2="19.5" strokeWidth="1.25"/>
+              <line x1="7" y1="21" x2="14" y2="21" strokeWidth="1.25"/>
             </svg>
           </a>
           {/* LinkedIn */}
@@ -44,7 +45,7 @@ export default function Nav() {
             style={{ color: 'var(--fg)', display: 'flex', alignItems: 'center', transition: 'opacity 0.2s' }}
             title="LinkedIn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+              <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/>
             </svg>
           </a>
           {/* Hamburger */}
