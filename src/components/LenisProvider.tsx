@@ -2,17 +2,21 @@
 
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { LazyMotion, domAnimation } from 'framer-motion';
+import { lenisInstance } from '@/lib/lenisInstance';
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Skip on touch/mobile — native scroll is smoother and faster
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    if (isTouch || prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.2,
-      // exponential-out easing
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.8,
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
     });
+    lenisInstance.current = lenis;
 
     let rafId: number;
     function raf(time: number) {
@@ -24,8 +28,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisInstance.current = null;
     };
   }, []);
 
-  return <>{children}</>;
+  return <LazyMotion features={domAnimation} strict>{children}</LazyMotion>;
 }

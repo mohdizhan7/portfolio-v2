@@ -1,17 +1,13 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
 import ScrollProgress from '@/components/ScrollProgress';
 
-const dmSans = localFont({
-  src: [
-    { path: '../../public/fonts/dm-sans-400.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/dm-sans-500.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/dm-sans-700.woff2', weight: '700', style: 'normal' },
-    { path: '../../public/fonts/dm-sans-800.woff2', weight: '800', style: 'normal' },
-  ],
-  variable: '--font-dm-sans',
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -32,8 +28,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={dmSans.variable}>
-      <body style={{ fontFamily: 'var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
+    <html lang="en" className={inter.variable}>
+      <body style={{ fontFamily: 'var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif' }}>
         <LenisProvider>
           <ScrollProgress />
           {children}

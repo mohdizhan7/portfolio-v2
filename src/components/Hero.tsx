@@ -1,123 +1,179 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { m } from 'framer-motion';
 
-function useLiveClock() {
-  const [time, setTime] = useState('--:--:-- --');
+// ─── Live IST clock ──────────────────────────────────────────────────────────
+function LiveClock() {
+  const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     function tick() {
-      const ist = new Intl.DateTimeFormat('en-IN', {
+      if (!ref.current) return;
+      ref.current.textContent = new Intl.DateTimeFormat('en-IN', {
         timeZone: 'Asia/Kolkata',
         hour: '2-digit', minute: '2-digit', second: '2-digit',
         hour12: true,
       }).format(new Date()).toUpperCase();
-      setTime(ist);
     }
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
-  return time;
+  return (
+    <span
+      ref={ref}
+      style={{ fontWeight: 700, color: 'var(--fg)', fontVariantNumeric: 'tabular-nums' }}
+      suppressHydrationWarning
+    />
+  );
 }
 
+// ─── Skills ticker ───────────────────────────────────────────────────────────
+const TICKER_ITEMS = [
+  'WMS IMPLEMENTATION', 'TMS ROLLOUT', 'SQL', 'METABASE', 'SETU', 'POSTMAN',
+  '50+ SITE DEPLOYMENTS', 'NESTLÉ', 'P&G', 'ITC', 'UAT', 'KPI DASHBOARDS',
+  'WAREHOUSE OPS', 'PROCESS DESIGN', 'BRD DOCUMENTATION', 'CHANGE MANAGEMENT',
+  'LEAN SIX SIGMA', 'LAST-MILE LOGISTICS', 'GO-LIVE COORDINATION', 'PTL SYSTEMS',
+];
+
+function SkillsTicker() {
+  const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  return (
+    <div style={{ overflow: 'hidden', borderTop: '1px solid rgba(0,0,0,0.12)' }}>
+      <div className="ticker-track">
+        {items.map((item, i) => (
+          <span key={i} className="ticker-item">
+            {item}
+            <span className="ticker-sep">·</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Animation ───────────────────────────────────────────────────────────────
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 18 },
   visible: (delay = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as [number, number, number, number], delay },
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      delay,
+    },
   }),
 };
 
+// ─── Hero ────────────────────────────────────────────────────────────────────
 export default function Hero() {
-  const clock = useLiveClock();
-  const blobRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const blob = blobRef.current;
-    if (!blob) return;
-    function onMove(e: MouseEvent) {
-      blob!.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
-    }
-    window.addEventListener('mousemove', onMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
-
   return (
-    <section className="hero-padding" style={{
-      minHeight: '100vh',
-      padding: '0 64px',
-      display: 'flex',
-      alignItems: 'center',
-      position: 'relative',
-      overflow: 'hidden',
-      background: 'var(--hero-bg)',
-    }}>
-      {/* Mouse-tracking blob */}
-      <div ref={blobRef} style={{
-        position: 'absolute',
-        width: 500, height: 500,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle at center, rgba(255,255,255,0.07) 0%, transparent 70%)',
-        filter: 'blur(50px)',
-        pointerEvents: 'none',
-        top: 0, left: 0,
-        zIndex: 0,
-        willChange: 'transform',
-        transform: 'translate(calc(50vw - 250px), calc(50vh - 250px))',
-      }} />
+    <section
+      className="hero-padding"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
+        background: 'var(--hero-bg)',
+      }}
+    >
+      {/* Grain noise overlay */}
+      <svg
+        aria-hidden="true"
+        style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          opacity: 0.45, pointerEvents: 'none', zIndex: 0,
+        }}
+      >
+        <filter id="hero-noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#hero-noise)" />
+      </svg>
 
-      <div style={{ maxWidth: 1100, width: '100%', margin: '0 auto', position: 'relative', zIndex: 1, paddingTop: 64 }}>
+      <div style={{
+        maxWidth: 1100, width: '100%', margin: '0 auto',
+        position: 'relative', zIndex: 1,
+        paddingTop: 'clamp(140px, 16vw, 230px)',
+        paddingBottom: 'clamp(32px, 4vw, 48px)',
+        flex: 1, display: 'flex', flexDirection: 'column',
+      }}>
 
-        {/* Topbar */}
-        <motion.div
+        {/* ── Meta bar: location + status ──────────────────────────────── */}
+        <m.div
           variants={fadeUp} initial="hidden" animate="visible" custom={0}
           className="hero-topbar"
           style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            paddingBottom: 14,
-            borderBottom: '1px solid var(--fg-2)',
-            marginBottom: 64,
-            fontSize: 13.5, fontWeight: 400,
-            color: 'var(--fg-2)', letterSpacing: '0.01em',
-          }}>
-          <span>Mumbai, India → <b style={{ fontWeight: 700, color: 'var(--fg)', fontVariantNumeric: 'tabular-nums' }}>{clock}</b></span>
-          <span>✦ Status → <b style={{ fontWeight: 700, color: 'var(--fg)' }}>Open to work</b></span>
-        </motion.div>
-
-        {/* H1 — character reveal */}
-        <motion.h1
-          variants={fadeUp} initial="hidden" animate="visible" custom={0.1}
-          style={{
-            fontSize: 'clamp(56px, 7.5vw, 100px)',
-            fontWeight: 700,
-            lineHeight: 1.05,
-            letterSpacing: '-0.025em',
+            fontSize: 'clamp(16px, 1.8vw, 18px)',
+            fontWeight: 400,
             color: 'var(--fg)',
-            marginBottom: 96,
-          }}>
-          Hi, this is Mohammed Izhan.
-        </motion.h1>
+            letterSpacing: '0.01em',
+            marginBottom: 'clamp(24px, 2vw, 32px)',
+          }}
+        >
+          <span>Mumbai, India → <LiveClock /></span>
+          <span className="hero-topbar-status">
+            ✦ Status → <b style={{ fontWeight: 700, color: 'var(--fg)' }}>Open to Work</b>
+          </span>
+        </m.div>
 
-        {/* Rows */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          {[
-            ['Currently →', ' Project Manager @ StackBox'],
-            ['Previously →', ' Edgistify • Mindseed • DTDC'],
-            ['Delivering →', ' Warehouse ops at scale 📦'],
-          ].map(([label, value], i) => (
-            <motion.div
+        {/* ── Divider ───────────────────────────────────────────────────── */}
+        <m.div
+          variants={fadeUp} initial="hidden" animate="visible" custom={0.05}
+          style={{
+            borderBottom: '1px solid rgba(0,0,0,0.28)',
+            marginBottom: 'clamp(32px, 4vw, 48px)',
+          }}
+        />
+
+        {/* ── H1 ────────────────────────────────────────────────────────── */}
+        <m.h1
+          variants={fadeUp} initial="hidden" animate="visible" custom={0.12}
+          style={{
+            fontSize: 'clamp(62px, 13vw, 100px)',
+            fontWeight: 600,
+            lineHeight: 1.04,
+            letterSpacing: '-0.03em',
+            color: 'var(--fg)',
+            maxWidth: 900,
+            marginBottom: 'clamp(70px, 8vw, 110px)',
+          }}
+        >
+          Hi, this is<br />Mohammed Izhan.
+        </m.h1>
+
+        {/* ── Info rows ────────────────────────────────────────────────── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(6px, 1vw, 10px)' }}>
+          {([
+            ['Currently →',  ' Project Manager @ StackBox', 0.22],
+            ['Previously →', ' Edgistify · Mindseed · DTDC', 0.3],
+            ['Delivering →', ' End-to-end, every time 📦', 0.38],
+          ] as const).map(([label, value, delay]) => (
+            <m.div
               key={label}
-              variants={fadeUp} initial="hidden" animate="visible" custom={0.2 + i * 0.1}
+              variants={fadeUp} initial="hidden" animate="visible" custom={delay}
               style={{
-                fontSize: 20, fontWeight: 400,
-                color: 'var(--fg-2)',
-                padding: '18px 0',
-                borderBottom: '1px solid var(--line)',
-              }}>
-              {label}<b style={{ fontWeight: 700, color: 'var(--fg)' }}>{value}</b>
-            </motion.div>
+                fontSize: 'clamp(17px, 2.2vw, 20px)',
+                fontWeight: 400,
+                color: 'var(--fg)',
+                lineHeight: 1.45,
+                padding: '3px 0',
+              }}
+            >
+              <span>{label} </span>
+              <b style={{ fontWeight: 700, color: 'var(--fg)' }}>{value.trim()}</b>
+            </m.div>
           ))}
+        </div>
+
+        {/* ── Skills ticker pinned to bottom ───────────────────────────── */}
+        <div style={{ marginTop: 'auto', paddingTop: 'clamp(32px, 5vw, 56px)' }}>
+          <m.div variants={fadeUp} initial="hidden" animate="visible" custom={0.46}>
+            <SkillsTicker />
+          </m.div>
         </div>
 
       </div>

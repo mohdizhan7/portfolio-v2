@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 
 export default function Contact() {
   const ref = useRef(null);
@@ -13,7 +13,7 @@ export default function Contact() {
       borderTop: '1px solid var(--line)',
     }}>
       <div style={{ maxWidth: 1100, width: '100%', margin: '0 auto' }} ref={ref}>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -27,14 +27,14 @@ export default function Contact() {
           }}>
             Let&apos;s talk.
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="contact__grid">
           {[
             { label: 'mohdizhan7@gmail.com', href: 'mailto:mohdizhan7@gmail.com' },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/mohmmedizhan/' },
           ].map((item, i) => (
-            <motion.a
+            <m.a
               key={item.href}
               href={item.href}
               target={item.href.startsWith('http') ? '_blank' : undefined}
@@ -45,7 +45,7 @@ export default function Contact() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 + i * 0.1 }}
             >
               {item.label}
-            </motion.a>
+            </m.a>
           ))}
         </div>
       </div>
