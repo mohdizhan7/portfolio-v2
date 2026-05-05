@@ -235,17 +235,17 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0, -0.5, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0, -1, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[0, -2, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1.5, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[0, -3, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[0, -2, 0]}
+          position={[0, -4.5, 0]}
           ref={card}
           {...cardProps}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
