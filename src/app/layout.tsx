@@ -12,12 +12,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Mohammed Izhan Shaikh — Project Manager',
+  title: 'Mohammed Izhan Shaikh — Supply Chain Project Manager',
   description: 'Senior Project & KAM professional specialising in supply chain, warehouse ops, and last-mile delivery at scale.',
   authors: [{ name: 'Mohammed Izhan Shaikh' }],
   robots: { index: true, follow: true },
   openGraph: {
-    title: 'Mohammed Izhan Shaikh — Project Manager',
+    title: 'Mohammed Izhan Shaikh — Supply Chain Project Manager',
     description: 'Senior Project & KAM professional specialising in supply chain, warehouse ops, and last-mile delivery at scale.',
     url: 'https://mohmmedizhan.com',
     siteName: 'mohmmedizhan.com',

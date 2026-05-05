@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export const runtime = 'nodejs';
-export const alt = 'Mohammed Izhan Shaikh — Project Manager';
+export const alt = 'Mohammed Izhan Shaikh — Supply Chain Project Manager';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -120,17 +120,23 @@ export default async function Image() {
               </span>
             </div>
 
-            <span
+            {/* CTA pill */}
+            <div
               style={{
-                fontSize: 14,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                background: '#2e64b0',
+                color: '#ffffff',
+                fontSize: 15,
                 fontWeight: 700,
-                color: 'rgba(10,10,10,0.35)',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
+                letterSpacing: '-0.01em',
+                padding: '12px 22px',
+                borderRadius: 40,
               }}
             >
-              mohmmedizhan.com
-            </span>
+              View Portfolio →
+            </div>
           </div>
         </div>
       </div>
