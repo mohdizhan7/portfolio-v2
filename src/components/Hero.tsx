@@ -124,7 +124,7 @@ export default function Hero() {
         <m.div
           variants={fadeUp} initial="hidden" animate="visible" custom={0.05}
           style={{
-            borderBottom: '1px solid rgba(0,0,0,0.28)',
+            borderBottom: '2px solid #000',
             marginBottom: 'clamp(32px, 4vw, 48px)',
           }}
         />

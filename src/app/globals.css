@@ -293,6 +293,11 @@ a {
   to   { transform: translateX(-50%); }
 }
 
+@keyframes ticker-rev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
 .ticker-track {
   display: flex;
   width: max-content;
@@ -300,7 +305,28 @@ a {
   padding: 14px 0;
 }
 
-.ticker-track:hover { animation-play-state: paused; }
+.ticker-track-rev {
+  display: flex;
+  width: max-content;
+  animation: ticker-rev 28s linear infinite;
+  padding: 14px 0;
+}
+
+.ticker-track:hover,
+.ticker-track-rev:hover { animation-play-state: paused; }
+
+/* Tools banner ticker */
+.tools-track {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: ticker 50s linear infinite;
+  padding: 16px 0;
+  gap: 0;
+  align-items: center;
+}
+
+.tools-track:hover { animation-play-state: paused; }
 
 .ticker-item {
   display: inline-flex;
@@ -344,6 +370,27 @@ a {
   .hamburger { display: none !important; }
   .nav-icons { display: flex; align-items: center; gap: 12px; }
 }
+
+/* About page approach grid */
+@media (max-width: 640px) {
+  .approach-grid { grid-template-columns: 1fr !important; }
+  .skills-grid   { grid-template-columns: 1fr !important; }
+}
+
+/* Case study related card */
+.related-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  color: var(--fg);
+  text-decoration: none;
+}
+.related-card:hover { border-color: var(--fg-4); }
 
 /* Disable all transitions/animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {

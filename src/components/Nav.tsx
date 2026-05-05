@@ -18,7 +18,7 @@ export default function Nav() {
   const fg       = 'var(--fg)';
   const bg       = onHero ? 'transparent' : 'rgba(232,232,228,0.88)';
   const backdrop = onHero ? 'none' : 'blur(14px)';
-  const line     = onHero ? 'rgba(0,0,0,0.55)' : 'var(--line)';
+  const line     = onHero ? '#000' : 'var(--line)';
 
   return (
     <>
@@ -29,7 +29,7 @@ export default function Nav() {
         background: bg,
         backdropFilter: backdrop,
         WebkitBackdropFilter: backdrop,
-        borderBottom: `1px solid ${line}`,
+        borderBottom: `2px solid ${line}`,
         transition: 'background 0.4s, border-color 0.4s, backdrop-filter 0.4s',
       }}>
         {/* Inner container — same max-width as page sections */}
