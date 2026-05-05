@@ -28,11 +28,6 @@ function useCardTexture() {
     canvas.height = H;
     const ctx = canvas.getContext('2d')!;
 
-    // Rotate 180° to compensate for GLTF UV orientation (card mesh UVs are
-    // flipped relative to the default CanvasTexture coordinate space).
-    ctx.translate(W, H);
-    ctx.rotate(Math.PI);
-
     // Background
     const bg = ctx.createLinearGradient(0, 0, 0, H);
     bg.addColorStop(0, '#111118');
