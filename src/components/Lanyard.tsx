@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
+import { useGLTF, useTexture, Environment, Lightformer, Text } from '@react-three/drei';
 import {
   BallCollider,
   CuboidCollider,
@@ -172,8 +172,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
             <group position={[0, 0.05, 0]}>
               <mesh geometry={nodes.card.geometry}>
                 <meshPhysicalMaterial
-                  map={materials.base.map}
-                  map-anisotropy={16}
+                  color="#0d0d12"
                   clearcoat={isMobile ? 0 : 1}
                   clearcoatRoughness={0.15}
                   roughness={0.9}
@@ -186,6 +185,50 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
                 material-roughness={0.3}
               />
               <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+
+              {/* ── Card text overlay ───────────────────────────────── */}
+              {/* Name — upper portion of card face */}
+              <Text
+                position={[0, 0.58, 0.015]}
+                fontSize={0.085}
+                maxWidth={0.62}
+                color="#ffffff"
+                anchorX="center"
+                anchorY="middle"
+                font="/fonts/dm-sans-700.woff2"
+                material-toneMapped={false}
+              >
+                Mohammed Izhan
+              </Text>
+
+              {/* Thin divider */}
+              <Text
+                position={[0, 0.47, 0.015]}
+                fontSize={0.022}
+                maxWidth={0.55}
+                color="#333340"
+                anchorX="center"
+                anchorY="middle"
+                font="/fonts/dm-sans-400.woff2"
+                material-toneMapped={false}
+              >
+                ─────────────────
+              </Text>
+
+              {/* Role — below divider */}
+              <Text
+                position={[0, 0.36, 0.015]}
+                fontSize={0.052}
+                maxWidth={0.62}
+                color="#888899"
+                anchorX="center"
+                anchorY="middle"
+                font="/fonts/dm-sans-400.woff2"
+                letterSpacing={0.04}
+                material-toneMapped={false}
+              >
+                Project Manager
+              </Text>
             </group>
           </group>
         </RigidBody>
