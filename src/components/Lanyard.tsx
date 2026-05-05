@@ -28,6 +28,11 @@ function useCardTexture() {
     canvas.height = H;
     const ctx = canvas.getContext('2d')!;
 
+    // Rotate 180° to compensate for GLTF UV orientation (card mesh UVs are
+    // flipped relative to the default CanvasTexture coordinate space).
+    ctx.translate(W, H);
+    ctx.rotate(Math.PI);
+
     // Background
     const bg = ctx.createLinearGradient(0, 0, 0, H);
     bg.addColorStop(0, '#111118');
@@ -94,13 +99,13 @@ function useCardTexture() {
     ctx.fillText('mohdizhan7@gmail.com', cx, 910);
     ctx.fillText('Mumbai, India', cx, 966);
 
-    // Bottom label
+    // Bottom tag
     ctx.font = '700 20px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.12)';
-    ctx.letterSpacing = '0.15em';
     ctx.fillText('SUPPLY CHAIN  ·  OPERATIONS  ·  PM', cx, H - 80);
 
     const tex = new THREE.CanvasTexture(canvas);
+    tex.flipY = false; // Match GLTF UV convention (origin top-left, not bottom-left)
     tex.needsUpdate = true;
     return tex;
   }, []);
