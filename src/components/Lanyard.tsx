@@ -22,11 +22,15 @@ extend({ MeshLineGeometry, MeshLineMaterial });
 
 function useCardTexture() {
   return useMemo(() => {
-    const W = 1024, H = 1440;
+    // Card UV spans V[0.002, 0.757] of the original 1440px height.
+    // Using 1024×1090 matches that coverage exactly so nothing spills off.
+    const W = 1024, H = 1090;
     const canvas = document.createElement('canvas');
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext('2d')!;
+
+    const cx = W / 2;
 
     // Background
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -35,72 +39,70 @@ function useCardTexture() {
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
-    // Subtle top accent bar
-    ctx.fillStyle = 'rgba(255,255,255,0.06)';
-    ctx.fillRect(0, 0, W, 6);
+    // Top accent bar
+    ctx.fillStyle = 'rgba(255,255,255,0.07)';
+    ctx.fillRect(0, 0, W, 5);
 
     // Monogram circle
-    const cx = W / 2, cy = 280;
     ctx.beginPath();
-    ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+    ctx.arc(cx, 160, 68, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255,255,255,0.07)';
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+    ctx.arc(cx, 160, 68, 0, Math.PI * 2);
     ctx.strokeStyle = 'rgba(255,255,255,0.15)';
     ctx.lineWidth = 1.5;
     ctx.stroke();
-
-    ctx.font = 'bold 68px system-ui, sans-serif';
+    ctx.font = 'bold 54px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.88)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('MI', cx, cy);
+    ctx.fillText('MI', cx, 160);
 
     // Name
-    ctx.font = 'bold 78px system-ui, sans-serif';
+    ctx.font = 'bold 70px system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText('Mohammed', cx, 460);
-    ctx.fillText('Izhan', cx, 556);
+    ctx.fillText('Mohammed', cx, 318);
+    ctx.fillText('Izhan', cx, 402);
 
     // Divider
     ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(80, 618);
-    ctx.lineTo(W - 80, 618);
+    ctx.moveTo(80, 450);
+    ctx.lineTo(W - 80, 450);
     ctx.stroke();
 
     // Role
-    ctx.font = '500 42px system-ui, sans-serif';
+    ctx.font = '500 38px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.65)';
-    ctx.fillText('Project Manager', cx, 690);
+    ctx.fillText('Project Manager', cx, 512);
 
     // Company
-    ctx.font = '600 34px system-ui, sans-serif';
+    ctx.font = '600 30px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.38)';
-    ctx.fillText('StackBox', cx, 758);
+    ctx.fillText('StackBox', cx, 570);
 
     // Divider 2
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.beginPath();
-    ctx.moveTo(80, 830);
-    ctx.lineTo(W - 80, 830);
+    ctx.moveTo(80, 618);
+    ctx.lineTo(W - 80, 618);
     ctx.stroke();
 
-    // Contact details
-    ctx.font = '400 30px system-ui, sans-serif';
+    // Contact
+    ctx.font = '400 26px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.fillText('mohdizhan7@gmail.com', cx, 910);
-    ctx.fillText('Mumbai, India', cx, 966);
+    ctx.fillText('mohdizhan7@gmail.com', cx, 672);
+    ctx.fillText('Mumbai, India', cx, 720);
 
     // Bottom tag
-    ctx.font = '700 20px system-ui, sans-serif';
+    ctx.font = '700 16px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.12)';
-    ctx.fillText('SUPPLY CHAIN  ·  OPERATIONS  ·  PM', cx, H - 80);
+    ctx.fillText('SUPPLY CHAIN  ·  OPERATIONS  ·  PM', cx, 840);
 
     const tex = new THREE.CanvasTexture(canvas);
-    tex.flipY = false; // Match GLTF UV convention (origin top-left, not bottom-left)
+    tex.flipY = false;
     tex.needsUpdate = true;
     return tex;
   }, []);
