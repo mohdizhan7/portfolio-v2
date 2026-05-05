@@ -121,7 +121,7 @@ export default function AboutPage() {
 
           {/* Right: interactive Lanyard */}
           <div style={{ height: '80vh', minHeight: 480 }}>
-            <LanyardDynamic position={[0, 0, 22]} gravity={[0, -40, 0]} fov={20} />
+            <LanyardDynamic position={[0, 0, 18]} gravity={[0, -20, 0]} fov={32} />
           </div>
         </div>
 
