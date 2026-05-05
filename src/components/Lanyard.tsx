@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import {
@@ -17,6 +17,96 @@ import * as THREE from 'three';
 import './Lanyard.css';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
+
+// ─── Card texture ─────────────────────────────────────────────────────────────
+
+function useCardTexture() {
+  return useMemo(() => {
+    const W = 1024, H = 1440;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d')!;
+
+    // Background
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#111118');
+    bg.addColorStop(1, '#0a0a10');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle top accent bar
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.fillRect(0, 0, W, 6);
+
+    // Monogram circle
+    const cx = W / 2, cy = 280;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.07)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.font = 'bold 68px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.88)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('MI', cx, cy);
+
+    // Name
+    ctx.font = 'bold 78px system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Mohammed', cx, 460);
+    ctx.fillText('Izhan', cx, 556);
+
+    // Divider
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(80, 618);
+    ctx.lineTo(W - 80, 618);
+    ctx.stroke();
+
+    // Role
+    ctx.font = '500 42px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.65)';
+    ctx.fillText('Project Manager', cx, 690);
+
+    // Company
+    ctx.font = '600 34px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.38)';
+    ctx.fillText('StackBox', cx, 758);
+
+    // Divider 2
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.beginPath();
+    ctx.moveTo(80, 830);
+    ctx.lineTo(W - 80, 830);
+    ctx.stroke();
+
+    // Contact details
+    ctx.font = '400 30px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillText('mohdizhan7@gmail.com', cx, 910);
+    ctx.fillText('Mumbai, India', cx, 966);
+
+    // Bottom label
+    ctx.font = '700 20px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.letterSpacing = '0.15em';
+    ctx.fillText('SUPPLY CHAIN  ·  OPERATIONS  ·  PM', cx, H - 80);
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.needsUpdate = true;
+    return tex;
+  }, []);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface LanyardProps {
   position?: [number, number, number];
@@ -54,6 +144,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
 
   const { nodes, materials } = useGLTF('/card.glb') as any;
   const texture = useTexture('/lanyard.png');
+  const cardTexture = useCardTexture();
 
   const [curve] = useState(
     () =>
@@ -158,12 +249,12 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
           >
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
-                map={materials.base.map}
+                map={cardTexture}
                 map-anisotropy={16}
                 clearcoat={isMobile ? 0 : 1}
                 clearcoatRoughness={0.15}
-                roughness={0.9}
-                metalness={0.8}
+                roughness={0.3}
+                metalness={0.1}
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
