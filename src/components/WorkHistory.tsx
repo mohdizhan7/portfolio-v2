@@ -152,7 +152,7 @@ function WorkModal({ job, onClose }: { job: Job; onClose: () => void }) {
           } : {
             top: '50%',
             left: '50%',
-            width: 'min(600px, 92vw)',
+            width: 'min(820px, 92vw)',
             maxHeight: '85vh',
             borderRadius: 12,
             border: '1px solid var(--line)',
