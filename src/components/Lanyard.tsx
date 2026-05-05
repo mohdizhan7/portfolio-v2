@@ -223,8 +223,8 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
       (band.current.geometry as any).setPoints(curve.getPoints(isMobile ? 16 : 32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
-      // Decay existing Y spin + strong restorative force → card always faces camera
-      card.current.setAngvel({ x: ang.x, y: ang.y * 0.5 - rot.y * 3.0, z: ang.z });
+      // Y rotation is locked via enabledRotations — only damp X/Z to stop wobble
+      card.current.setAngvel({ x: ang.x, y: 0, z: ang.z });
     }
   });
 
@@ -249,6 +249,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
           ref={card}
           {...cardProps}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
+          enabledRotations={[true, false, true]}
         >
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
