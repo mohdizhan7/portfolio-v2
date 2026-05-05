@@ -195,7 +195,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
                 color="#ffffff"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/dm-sans-700.woff2"
+                font="/fonts/DM-Sans-700.ttf"
                 material-toneMapped={false}
               >
                 Mohammed Izhan
@@ -209,7 +209,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
                 color="#333340"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/dm-sans-400.woff2"
+                font="/fonts/DM-Sans-400.ttf"
                 material-toneMapped={false}
               >
                 ─────────────────
@@ -223,7 +223,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
                 color="#888899"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/dm-sans-400.woff2"
+                font="/fonts/DM-Sans-400.ttf"
                 letterSpacing={0.04}
                 material-toneMapped={false}
               >
