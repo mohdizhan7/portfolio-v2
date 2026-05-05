@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Nav from '@/components/Nav';
 import ToolsLogoLoop from '@/components/ToolsLogoLoop';
+import LanyardDynamic from '@/components/LanyardDynamic';
 
 export const metadata: Metadata = {
   title: 'About — Mohammed Izhan Shaikh',
@@ -86,27 +87,42 @@ export default function AboutPage() {
       <main style={{ paddingTop: 80 }}>
 
         {/* ── 1. HERO ─────────────────────────────────────────────────── */}
-        <div style={{ ...SECTION, borderBottom: 'none', paddingBottom: 48 }}>
-          <p style={LABEL}>About</p>
-          <h1 style={{
-            fontSize: 'clamp(44px, 7vw, 80px)',
-            fontWeight: 700,
-            letterSpacing: '-0.03em',
-            lineHeight: 1.05,
-            maxWidth: 820,
-            marginTop: 20,
-            marginBottom: 28,
-          }}>
-            I build systems that make operations scale.
-          </h1>
-          <p style={{
-            fontSize: 'clamp(17px, 2vw, 20px)',
-            color: 'var(--fg-2)',
-            maxWidth: 580,
-            lineHeight: 1.55,
-          }}>
-            Project Manager specialising in supply chain, warehouse operations, and process design.
-          </p>
+        <div style={{
+          maxWidth: 1100, margin: '0 auto',
+          padding: '80px clamp(24px, 4.5vw, 64px) 0',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 24,
+          alignItems: 'center',
+          minHeight: '80vh',
+        }} className="about-hero-grid">
+          {/* Left: text */}
+          <div>
+            <p style={LABEL}>About</p>
+            <h1 style={{
+              fontSize: 'clamp(44px, 6vw, 72px)',
+              fontWeight: 700,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.05,
+              marginTop: 20,
+              marginBottom: 28,
+            }}>
+              I build systems that make operations scale.
+            </h1>
+            <p style={{
+              fontSize: 'clamp(17px, 2vw, 20px)',
+              color: 'var(--fg-2)',
+              maxWidth: 480,
+              lineHeight: 1.55,
+            }}>
+              Project Manager specialising in supply chain, warehouse operations, and process design.
+            </p>
+          </div>
+
+          {/* Right: interactive Lanyard */}
+          <div style={{ height: '80vh', minHeight: 480 }}>
+            <LanyardDynamic position={[0, 0, 22]} gravity={[0, -40, 0]} fov={20} />
+          </div>
         </div>
 
         {/* ── 2. QUICK INTRO ──────────────────────────────────────────── */}

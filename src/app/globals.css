@@ -373,8 +373,13 @@ a {
 
 /* About page approach grid */
 @media (max-width: 640px) {
-  .approach-grid { grid-template-columns: 1fr !important; }
-  .skills-grid   { grid-template-columns: 1fr !important; }
+  .approach-grid    { grid-template-columns: 1fr !important; }
+  .skills-grid      { grid-template-columns: 1fr !important; }
+  .about-hero-grid  { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 768px) {
+  .about-hero-grid .lanyard-col { display: none; }
 }
 
 /* Case study related card */
