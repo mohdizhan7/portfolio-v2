@@ -157,7 +157,7 @@ export default function CaseStudyGrid() {
   const headerInView = useInView(headerRef, { once: true, margin: '-80px' });
 
   return (
-    <section id="projects" style={{ padding: '80px 64px 60px' }}>
+    <section id="projects" style={{ padding: '80px clamp(24px, 4.5vw, 64px) 60px' }}>
       <div style={{ maxWidth: 1100, width: '100%', margin: '0 auto' }}>
         <m.div
           ref={headerRef}
