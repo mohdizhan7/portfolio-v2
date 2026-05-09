@@ -283,11 +283,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <NavCaseStudy />
       <main>
 
-      {/* ── Hero: full-bleed image, title + meta table at bottom-left ── */}
+      {/* ── Hero: full-viewport, title fills height, meta table pinned to bottom ── */}
       <div style={{
         position: 'relative',
         width: '100%',
-        height: 'clamp(560px, 90vh, 900px)',
+        height: '100vh',
+        minHeight: 640,
         backgroundColor: '#0a0a0a',
         overflow: 'hidden',
       }}>
@@ -296,21 +297,25 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           alt={cs.title}
           fill
           priority
-          style={{ objectFit: 'cover', opacity: 0.75 }}
+          style={{ objectFit: 'cover', opacity: 0.7 }}
           sizes="100vw"
         />
-        {/* Gradient — clear at top, dark at bottom for text legibility */}
+        {/* Gradient — transparent top, very dark at bottom */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.9) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.88) 100%)',
         }} />
 
-        {/* ── Title — bottom-left, above the meta table ─── */}
+        {/* ── Title block — fills the main body of the hero ── */}
         <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
+          position: 'absolute',
+          top: 0, left: 0, right: 0,
+          bottom: 108, /* leave room for meta table */
+          display: 'flex',
+          alignItems: 'flex-end',
+          padding: '0 clamp(24px, 4.5vw, 64px) 36px',
         }}>
-          {/* Status badge + title */}
-          <div style={{ padding: '0 clamp(24px, 4.5vw, 64px)', marginBottom: 36 }}>
+          <div>
             {cs.status && (
               <div style={{
                 display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -318,47 +323,52 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 textTransform: 'uppercase', color: '#fbbf24',
                 background: 'rgba(251,191,36,0.12)',
                 border: '1px solid rgba(251,191,36,0.3)',
-                borderRadius: 20, padding: '4px 12px', marginBottom: 20,
+                borderRadius: 20, padding: '4px 12px', marginBottom: 24,
               }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24', flexShrink: 0 }} />
                 {cs.status}
               </div>
             )}
             <h1 style={{
-              fontSize: 'clamp(44px, 7vw, 96px)',
+              fontSize: 'clamp(56px, 9vw, 128px)',
               fontWeight: 800, color: '#ffffff',
-              lineHeight: 1.02, letterSpacing: '-0.035em',
-              margin: 0, maxWidth: 860,
+              lineHeight: 1.0, letterSpacing: '-0.04em',
+              margin: 0,
             }}>
               {cs.title}
             </h1>
           </div>
+        </div>
 
-          {/* ── Meta table — dvdrod style, dividers between columns ── */}
-          <div style={{
-            display: 'flex',
-            borderTop: '1px solid rgba(255,255,255,0.14)',
-          }}>
-            {metaItems.map(([label, val], i) => (
-              <div key={label} style={{
-                paddingTop: 20,
-                paddingBottom: 28,
-                paddingLeft: i === 0 ? 'clamp(24px, 4.5vw, 64px)' : 32,
-                paddingRight: i === metaItems.length - 1 ? 'clamp(24px, 4.5vw, 64px)' : 32,
-                borderRight: i < metaItems.length - 1 ? '1px solid rgba(255,255,255,0.14)' : 'none',
+        {/* ── Meta table — pinned to bottom, 4 equal columns with dividers ── */}
+        <div style={{
+          position: 'absolute',
+          bottom: 0, left: 0, right: 0,
+          display: 'flex',
+          borderTop: '1px solid rgba(255,255,255,0.15)',
+          height: 108,
+        }}>
+          {metaItems.map(([label, val], i) => (
+            <div key={label} style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              paddingLeft: i === 0 ? 'clamp(24px, 4.5vw, 64px)' : 28,
+              paddingRight: 28,
+              borderRight: i < metaItems.length - 1 ? '1px solid rgba(255,255,255,0.15)' : 'none',
+            }}>
+              <div style={{
+                fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.42)', marginBottom: 8,
               }}>
-                <div style={{
-                  fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.4)', marginBottom: 8,
-                }}>
-                  {label}
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
-                  {val}
-                </div>
+                {label}
               </div>
-            ))}
-          </div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', lineHeight: 1.35 }}>
+                {val}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
