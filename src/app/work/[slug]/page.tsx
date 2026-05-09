@@ -242,16 +242,18 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                     borderLeft: '3px solid var(--fg)',
                     borderRadius: '0 8px 8px 0',
                   }}>
-                    <p style={{
-                      fontSize: 19,
-                      fontWeight: 500,
-                      lineHeight: 1.65,
-                      color: 'var(--fg)',
-                      fontStyle: 'italic',
-                      margin: 0,
-                    }}>
-                      {text}
-                    </p>
+                    {paragraphs.map((para, pi) => (
+                      <p key={pi} style={{
+                        fontSize: 19,
+                        fontWeight: 500,
+                        lineHeight: 1.65,
+                        color: 'var(--fg)',
+                        fontStyle: 'italic',
+                        margin: pi > 0 ? '16px 0 0' : 0,
+                      }}>
+                        {para}
+                      </p>
+                    ))}
                   </blockquote>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
