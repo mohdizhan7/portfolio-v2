@@ -43,25 +43,36 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
   const td = (base: number) => (hasTransition ? base + 0.62 : base);
 
   return (
-    <div style={{
+    <div className="cs-hero" style={{
       position: 'relative',
       width: '100%',
-      height: '100vh',
+      height: '100svh',
       minHeight: 640,
       backgroundColor: '#0a0a0a',
-      overflow: 'hidden',
     }}>
 
-      <m.div style={{ position: 'absolute', inset: 0, clipPath }}>
+      <m.div
+        style={{ position: 'absolute', inset: 0, clipPath }}
+        initial={{ opacity: hasTransition ? 1 : 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.85, ease: EASE }}
+      >
         <Image
           src={cover}
           alt={title}
           fill
           priority
-          style={{ objectFit: 'cover', opacity: 0.7 }}
+          className="cs-hero-img"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center 15%',
+            opacity: 0.7,
+            filter: 'brightness(0.72) contrast(1.05) saturate(0.8)',
+            transform: 'scale(1.02)',
+          }}
           sizes="100vw"
         />
-        <div style={{
+        <div className="cs-hero-gradient" style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.88) 100%)',
         }} />
@@ -90,11 +101,16 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
         {number}
       </m.div>
 
-      <div style={{
-        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-        display: 'flex', alignItems: 'flex-end',
-        padding: '0 clamp(24px, 4.5vw, 64px) clamp(40px, 7vh, 72px)',
-      }}>
+      {/* Title — sits above the bottom bar with responsive clearance */}
+      <div
+        className="cs-hero-content"
+        style={{
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+          display: 'flex', alignItems: 'flex-end',
+          paddingLeft: 'clamp(24px, 4.5vw, 64px)',
+          paddingRight: 'clamp(24px, 4.5vw, 64px)',
+        }}
+      >
         <div className="w-full min-w-0">
           {status && (
             <m.div
@@ -116,6 +132,7 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
           )}
 
           <m.h1
+            className="cs-hero-title"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, ease: EASE, delay: td(status ? 0.2 : 0.1) }}
@@ -123,46 +140,42 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
               fontSize: 'clamp(56px, 9vw, 128px)',
               fontWeight: 800, color: '#ffffff',
               lineHeight: 1.0, letterSpacing: '-0.04em',
-              margin: '0 0 28px',
+              margin: 0,
             }}
           >
             {title}
           </m.h1>
-
-          <m.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE, delay: td(status ? 0.36 : 0.24) }}
-            className="grid grid-cols-2 w-full overflow-hidden rounded-[14px] border border-white/[0.16] bg-white/[0.08] md:inline-flex md:w-auto"
-            style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
-          >
-            {metaItems.map(([label, val], i) => {
-              const isRightCol  = i % 2 === 1;
-              const isBottomRow = i >= metaItems.length - 2;
-              const isLastItem  = i === metaItems.length - 1;
-              return (
-                <div
-                  key={label}
-                  className={[
-                    'min-w-0 p-3 md:px-7 md:py-4 border-white/[0.14]',
-                    !isRightCol  ? 'border-r'    : '',
-                    !isBottomRow ? 'border-b'    : '',
-                    isLastItem   ? 'md:border-r-0' : 'md:border-r',
-                    'md:border-b-0',
-                  ].join(' ')}
-                >
-                  <div className="mb-[7px] text-[10px] uppercase tracking-[0.18em] text-white/45">
-                    {label}
-                  </div>
-                  <div className="truncate text-sm font-semibold text-white">
-                    {val}
-                  </div>
-                </div>
-              );
-            })}
-          </m.div>
         </div>
       </div>
+
+      {/* Full-bleed metadata bar — flat, no border-radius, anchored to bottom edge */}
+      <m.div
+        className="cs-hero-meta-wrap md:backdrop-blur-lg"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: EASE, delay: td(status ? 0.36 : 0.24) }}
+      >
+        <div className="cs-hero-meta-grid grid grid-cols-2 w-full border-t border-white/[0.1] md:grid-cols-4 max-md:backdrop-blur-xl">
+          {metaItems.map(([label, val], i) => (
+            <div
+              key={label}
+              className={[
+                'flex flex-col justify-center px-8 py-7 md:px-10 md:py-8 border-white/[0.1]',
+                i !== metaItems.length - 1 ? 'md:border-r' : '',
+                i % 2 === 0 ? 'border-r' : '',
+                i < 2 ? 'border-b md:border-b-0' : '',
+              ].join(' ')}
+            >
+              <div className="mb-3 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                {label}
+              </div>
+              <div className="text-[15px] md:text-[17px] font-semibold text-white leading-snug">
+                {val}
+              </div>
+            </div>
+          ))}
+        </div>
+      </m.div>
 
       <m.div
         className="cs-hero-scroll"

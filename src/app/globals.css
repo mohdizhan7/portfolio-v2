@@ -383,8 +383,7 @@ a {
   /* Ticker: drop auto-margin on mobile so it follows content naturally */
   .ticker-wrapper { margin-top: 48px !important; }
 
-  /* Case study hero: hide decorative elements that eat space on narrow screens */
-  .cs-hero-numeral { display: none !important; }
+  /* Case study hero: hide scroll indicator on narrow screens */
   .cs-hero-scroll  { display: none !important; }
 
   /* Related case-study cards: single column on small screens */
@@ -421,6 +420,165 @@ a {
   text-decoration: none;
 }
 .related-card:hover { border-color: var(--fg-4); }
+
+/* ─── Case Study Hero Atmosphere ─── */
+
+.cs-hero {
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cs-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 35%,
+    rgba(0,0,0,0.22) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cs-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 38%,
+    rgba(255,255,255,0.03),
+    transparent 58%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Content layers always above overlay pseudo-elements */
+.cs-hero-content,
+.cs-hero-meta-wrap,
+.cs-hero-numeral,
+.cs-hero-scroll {
+  z-index: 2;
+}
+
+.cs-hero-content {
+  padding-bottom: 160px;
+}
+
+.cs-hero-meta-wrap {
+  position: absolute;
+  left: 48px;
+  bottom: 48px;
+  width: min(1120px, calc(100vw - 96px));
+  z-index: 2;
+}
+
+.cs-hero-img {
+  object-position: center 18% !important;
+  transform: scale(1.045) translateY(-1%) !important;
+  filter: brightness(0.56) contrast(1.02) saturate(0.72) !important;
+  will-change: transform;
+}
+
+.cs-hero-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.12) 0%,
+    rgba(0,0,0,0.32) 44%,
+    rgba(0,0,0,0.94) 100%
+  ) !important;
+}
+
+.cs-hero-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: rgba(0,0,0,0.12) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.cs-hero-meta-grid > div {
+  min-width: 0;
+  padding: 24px 32px;
+}
+
+.cs-hero-title {
+  font-weight: 500 !important;
+  letter-spacing: -0.06em !important;
+  line-height: 0.88 !important;
+}
+
+.cs-hero-numeral {
+  -webkit-text-stroke: 2px rgba(255,255,255,0.035) !important;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+
+  /* Stronger lower gradient — more image area overlaps text on portrait */
+  .cs-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.18) 0%,
+      rgba(0,0,0,0.42) 52%,
+      rgba(0,0,0,0.88) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Title — prevent desktop scale from carrying over */
+  .cs-hero-title {
+    font-size: clamp(3.5rem, 13vw, 5rem) !important;
+    line-height: 0.88 !important;
+    letter-spacing: -0.05em !important;
+    max-width: min(90%, 12ch); /* prevents ultra-wide wrapping on foldables */
+  }
+
+  /* Breathing room above glass card — minimum 220px covers card height + offset on short screens */
+  .cs-hero-content {
+    padding-bottom: max(220px, 30vh);
+  }
+
+  /* Float as glass card */
+  .cs-hero-meta-wrap {
+    left: 24px;
+    right: 24px;
+    bottom: max(40px, env(safe-area-inset-bottom));
+    width: auto;
+  }
+
+  /* Glass card visual — blur applied via max-md:backdrop-blur-xl Tailwind class on element */
+  .cs-hero-meta-grid {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 24px;
+    overflow: hidden;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Inner cell padding — text must not hug the rounded card edges */
+  .cs-hero-meta-grid > div {
+    padding: 18px 20px !important;
+  }
+
+  /* Reposition numeral above card */
+  .cs-hero-numeral {
+    font-size: clamp(80px, 24vw, 120px) !important;
+    right: 20px !important;
+    bottom: max(180px, 26vh) !important;
+  }
+}
+
 
 /* Disable all transitions/animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
