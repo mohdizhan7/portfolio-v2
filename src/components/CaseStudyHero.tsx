@@ -16,26 +16,13 @@ type Props = {
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function CaseStudyHero({ title, cover, status, number, metaItems }: Props) {
-  /**
-   * Read the stored card-image rect synchronously.
-   * - Client-side nav: window is defined, getFromData() returns the stored rect.
-   * - Direct URL / SSR:  window is undefined → null, no transition.
-   * No hydration mismatch because for direct loads getFromData() is null on both
-   * server and client (nothing was stored).
-   */
   const fromRect = typeof window !== 'undefined' ? getFromData() : null;
-  const vw = typeof window !== 'undefined' ? window.innerWidth : 1440;
-  const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
   const hasTransition = !!fromRect;
 
-  /**
-   * clipPath motion value — starts at full-screen (SSR-safe default).
-   * useEffect imperatively snaps it to the card position then animates out.
-   */
   const clipPath = useMotionValue('inset(0px 0px 0px 0px)');
 
   useEffect(() => {
-    const d = getFromData(); // re-read (covers the case where window wasn't ready at render)
+    const d = getFromData();
     clearFromData();
 
     if (d) {
@@ -43,10 +30,8 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
       const h = window.innerHeight;
       const start = `inset(${d.top}px ${w - d.right}px ${h - d.bottom}px ${d.left}px round 16px)`;
 
-      // Snap to card bounds immediately (before browser paints the next frame)
       clipPath.set(start);
 
-      // Then animate to full-screen
       animate(clipPath, 'inset(0px 0px 0px 0px round 0px)', {
         duration: 0.72,
         ease: [0.16, 1, 0.3, 1],
@@ -55,10 +40,6 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /**
-   * Text element delays shift later when the clip animation is playing,
-   * so they don't appear before the image finishes expanding.
-   */
   const td = (base: number) => (hasTransition ? base + 0.62 : base);
 
   return (
@@ -71,7 +52,6 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
       overflow: 'hidden',
     }}>
 
-      {/* ── Image — controlled by the clipPath motion value ── */}
       <m.div style={{ position: 'absolute', inset: 0, clipPath }}>
         <Image
           src={cover}
@@ -81,14 +61,12 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
           style={{ objectFit: 'cover', opacity: 0.7 }}
           sizes="100vw"
         />
-        {/* Gradient: transparent top → dark bottom */}
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.88) 100%)',
         }} />
       </m.div>
 
-      {/* ── Background numeral (large outlined, low opacity) ── */}
       <m.div
         className="cs-hero-numeral"
         initial={{ opacity: 0 }}
@@ -112,14 +90,12 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
         {number}
       </m.div>
 
-      {/* ── Text content — bottom-anchored ── */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
         display: 'flex', alignItems: 'flex-end',
         padding: '0 clamp(24px, 4.5vw, 64px) clamp(40px, 7vh, 72px)',
       }}>
-        <div>
-          {/* Status badge */}
+        <div className="w-full min-w-0">
           {status && (
             <m.div
               initial={{ opacity: 0, y: 20 }}
@@ -139,7 +115,6 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
             </m.div>
           )}
 
-          {/* Title */}
           <m.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -154,43 +129,41 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
             {title}
           </m.h1>
 
-          {/* Floating meta table */}
           <m.div
-            className="cs-meta"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE, delay: td(status ? 0.36 : 0.24) }}
-            style={{
-              display: 'inline-flex',
-              background: 'rgba(255,255,255,0.08)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.16)',
-              borderRadius: 14,
-              overflow: 'hidden',
-            }}
+            className="grid grid-cols-2 w-full overflow-hidden rounded-[14px] border border-white/[0.16] bg-white/[0.08] md:inline-flex md:w-auto"
+            style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
           >
-            {metaItems.map(([label, val], i) => (
-              <div key={label} className="cs-meta-cell" style={{
-                padding: '16px 28px',
-                borderRight: i < metaItems.length - 1 ? '1px solid rgba(255,255,255,0.14)' : 'none',
-              }}>
-                <div style={{
-                  fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.45)', marginBottom: 7,
-                }}>
-                  {label}
+            {metaItems.map(([label, val], i) => {
+              const isRightCol  = i % 2 === 1;
+              const isBottomRow = i >= metaItems.length - 2;
+              const isLastItem  = i === metaItems.length - 1;
+              return (
+                <div
+                  key={label}
+                  className={[
+                    'min-w-0 p-3 md:px-7 md:py-4 border-white/[0.14]',
+                    !isRightCol  ? 'border-r'    : '',
+                    !isBottomRow ? 'border-b'    : '',
+                    isLastItem   ? 'md:border-r-0' : 'md:border-r',
+                    'md:border-b-0',
+                  ].join(' ')}
+                >
+                  <div className="mb-[7px] text-[10px] uppercase tracking-[0.18em] text-white/45">
+                    {label}
+                  </div>
+                  <div className="truncate text-sm font-semibold text-white">
+                    {val}
+                  </div>
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
-                  {val}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </m.div>
         </div>
       </div>
 
-      {/* ── Scroll indicator — right edge ── */}
       <m.div
         className="cs-hero-scroll"
         initial={{ opacity: 0 }}

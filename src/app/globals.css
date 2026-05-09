@@ -387,24 +387,6 @@ a {
   .cs-hero-numeral { display: none !important; }
   .cs-hero-scroll  { display: none !important; }
 
-  /* Meta table: collapse into 2-column grid */
-  .cs-meta {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    max-width: 100%;
-  }
-  .cs-meta-cell {
-    padding: 12px 14px !important;
-    border-right: none !important;         /* clear inline border */
-    border-bottom: 1px solid rgba(255,255,255,0.14) !important;
-    white-space: normal !important;        /* allow long values to wrap */
-  }
-  /* Re-add divider between left and right columns */
-  .cs-meta-cell:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,0.14) !important; }
-  /* Remove bottom border from last row */
-  .cs-meta-cell:nth-last-child(-n+2) { border-bottom: none !important; }
-
   /* Related case-study cards: single column on small screens */
   .cs-related-grid { grid-template-columns: 1fr !important; }
 }
