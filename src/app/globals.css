@@ -356,7 +356,7 @@ a {
   .nav-links { display: none !important; }
   .hamburger { display: flex !important; }
   .nav-icons { display: none !important; }
-  .hero-padding { padding: 0 24px; }
+  .hero-padding { padding: 0 24px; min-height: unset !important; padding-bottom: 48px; }
   .hero-topbar {
     flex-direction: column;
     align-items: flex-start;
@@ -364,6 +364,8 @@ a {
   }
   .hero-topbar-status { align-self: flex-end; }
   .exp__section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  /* Ticker: drop auto-margin on mobile so it follows content naturally */
+  .ticker-wrapper { margin-top: 48px !important; }
 }
 
 @media (min-width: 769px) {

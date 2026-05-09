@@ -170,7 +170,7 @@ export default function Hero() {
         </div>
 
         {/* ── Skills ticker pinned to bottom ───────────────────────────── */}
-        <div style={{ marginTop: 'auto', paddingTop: 'clamp(32px, 5vw, 56px)' }}>
+        <div className="ticker-wrapper" style={{ marginTop: 'auto', paddingTop: 'clamp(32px, 5vw, 56px)' }}>
           <m.div variants={fadeUp} initial="hidden" animate="visible" custom={0.46}>
             <SkillsTicker />
           </m.div>
