@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import NavCaseStudy from '@/components/NavCaseStudy';
 import { caseStudies, getCaseStudy } from '@/lib/caseStudies';
 
 export function generateStaticParams() {
@@ -278,9 +279,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   ];
 
   return (
-    <main>
+    <>
+      <NavCaseStudy />
+      <main>
 
-      {/* ── Hero: full-bleed image, title at bottom-left ─────────────── */}
+      {/* ── Hero: full-bleed image, title + meta table at bottom-left ── */}
       <div style={{
         position: 'relative',
         width: '100%',
@@ -296,127 +299,67 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           style={{ objectFit: 'cover', opacity: 0.75 }}
           sizes="100vw"
         />
-        {/* Gradient — clear at top, darkens progressively for text legibility */}
+        {/* Gradient — clear at top, dark at bottom for text legibility */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.72) 65%, rgba(0,0,0,0.92) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.9) 100%)',
         }} />
 
-        {/* ── Minimal case-study nav ───────────────── */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0,
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '28px clamp(24px, 5vw, 64px)',
-          zIndex: 10,
-        }}>
-          <Link href="/" style={{
-            color: 'rgba(255,255,255,0.9)',
-            fontSize: 13, fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}>
-            MI
-          </Link>
-          <Link href="/" style={{
-            color: 'rgba(255,255,255,0.9)',
-            fontSize: 13, fontWeight: 600,
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.18)',
-            borderRadius: 24, padding: '9px 20px',
-            backdropFilter: 'blur(10px)',
-          }}>
-            ← Back Home
-          </Link>
-        </div>
-
-        {/* ── Title + meta — sits at the bottom-left ─── */}
+        {/* ── Title — bottom-left, above the meta table ─── */}
         <div style={{
           position: 'absolute', bottom: 0, left: 0, right: 0,
-          padding: '0 clamp(24px, 5vw, 64px) clamp(40px, 6vh, 64px)',
         }}>
-          {cs.status && (
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: '#fbbf24',
-              background: 'rgba(251,191,36,0.12)',
-              border: '1px solid rgba(251,191,36,0.3)',
-              borderRadius: 20, padding: '4px 12px', marginBottom: 20,
+          {/* Status badge + title */}
+          <div style={{ padding: '0 clamp(24px, 4.5vw, 64px)', marginBottom: 36 }}>
+            {cs.status && (
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+                textTransform: 'uppercase', color: '#fbbf24',
+                background: 'rgba(251,191,36,0.12)',
+                border: '1px solid rgba(251,191,36,0.3)',
+                borderRadius: 20, padding: '4px 12px', marginBottom: 20,
+              }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24', flexShrink: 0 }} />
+                {cs.status}
+              </div>
+            )}
+            <h1 style={{
+              fontSize: 'clamp(44px, 7vw, 96px)',
+              fontWeight: 800, color: '#ffffff',
+              lineHeight: 1.02, letterSpacing: '-0.035em',
+              margin: 0, maxWidth: 860,
             }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24', flexShrink: 0 }} />
-              {cs.status}
-            </div>
-          )}
-          <h1 style={{
-            fontSize: 'clamp(48px, 7.5vw, 100px)',
-            fontWeight: 800, color: '#ffffff',
-            lineHeight: 1.02, letterSpacing: '-0.035em',
-            margin: '0 0 16px', maxWidth: 900,
-          }}>
-            {cs.title}
-          </h1>
-          <p style={{
-            fontSize: 'clamp(15px, 1.8vw, 19px)',
-            color: 'rgba(255,255,255,0.62)',
-            margin: 0, maxWidth: 640, lineHeight: 1.5,
-          }}>
-            {cs.subtitle}
-          </p>
+              {cs.title}
+            </h1>
+          </div>
 
-          {/* ── Meta items — left-aligned under the title, inside the hero ── */}
+          {/* ── Meta table — dvdrod style, dividers between columns ── */}
           <div style={{
             display: 'flex',
-            flexWrap: 'wrap',
-            gap: '20px 52px',
-            marginTop: 40,
-            paddingTop: 32,
             borderTop: '1px solid rgba(255,255,255,0.14)',
           }}>
-            {metaItems.map(([label, val]) => (
-              <div key={label}>
+            {metaItems.map(([label, val], i) => (
+              <div key={label} style={{
+                paddingTop: 20,
+                paddingBottom: 28,
+                paddingLeft: i === 0 ? 'clamp(24px, 4.5vw, 64px)' : 32,
+                paddingRight: i === metaItems.length - 1 ? 'clamp(24px, 4.5vw, 64px)' : 32,
+                borderRight: i < metaItems.length - 1 ? '1px solid rgba(255,255,255,0.14)' : 'none',
+              }}>
                 <div style={{
                   fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.38)', marginBottom: 6,
+                  color: 'rgba(255,255,255,0.4)', marginBottom: 8,
                 }}>
                   {label}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
                   {val}
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
-
-      {/* ── Metrics row ─────────────────────────────────────────────── */}
-      <div style={{
-        maxWidth: 1000, margin: '0 auto',
-        padding: 'clamp(48px, 7vw, 80px) clamp(24px, 5vw, 64px)',
-        borderBottom: '1px solid var(--line)',
-        display: 'flex', flexWrap: 'wrap',
-        gap: 'clamp(40px, 5vw, 0px)',
-        justifyContent: 'space-around',
-      }}>
-        {cs.metrics.map(m => (
-          <div key={m.label} style={{ textAlign: 'center', flex: '1 1 160px' }}>
-            <div style={{
-              fontSize: 'clamp(40px, 5.5vw, 64px)',
-              fontWeight: 700, letterSpacing: '-0.035em',
-              lineHeight: 1, marginBottom: 10,
-            }}>
-              {m.value}
-            </div>
-            <div style={{
-              fontSize: 13, color: 'var(--fg-3)',
-              lineHeight: 1.4, maxWidth: 160, margin: '0 auto',
-            }}>
-              {m.label}
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* ── 5-section body ──────────────────────────────────────────── */}
@@ -542,5 +485,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       )}
 
     </main>
+    </>
   );
 }
