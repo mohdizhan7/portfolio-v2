@@ -306,14 +306,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.88) 100%)',
         }} />
 
-        {/* ── Title block — fills the main body of the hero ── */}
+        {/* ── Title + floating meta table — bottom-aligned together ── */}
         <div style={{
           position: 'absolute',
-          top: 0, left: 0, right: 0,
-          bottom: 108, /* leave room for meta table */
+          top: 0, left: 0, right: 0, bottom: 0,
           display: 'flex',
           alignItems: 'flex-end',
-          padding: '0 clamp(24px, 4.5vw, 64px) 36px',
+          padding: '0 clamp(24px, 4.5vw, 64px) clamp(40px, 7vh, 72px)',
         }}>
           <div>
             {cs.status && (
@@ -329,46 +328,46 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 {cs.status}
               </div>
             )}
+
             <h1 style={{
               fontSize: 'clamp(56px, 9vw, 128px)',
               fontWeight: 800, color: '#ffffff',
               lineHeight: 1.0, letterSpacing: '-0.04em',
-              margin: 0,
+              margin: '0 0 28px',
             }}>
               {cs.title}
             </h1>
-          </div>
-        </div>
 
-        {/* ── Meta table — pinned to bottom, 4 equal columns with dividers ── */}
-        <div style={{
-          position: 'absolute',
-          bottom: 0, left: 0, right: 0,
-          display: 'flex',
-          borderTop: '1px solid rgba(255,255,255,0.15)',
-          height: 108,
-        }}>
-          {metaItems.map(([label, val], i) => (
-            <div key={label} style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              paddingLeft: i === 0 ? 'clamp(24px, 4.5vw, 64px)' : 28,
-              paddingRight: 28,
-              borderRight: i < metaItems.length - 1 ? '1px solid rgba(255,255,255,0.15)' : 'none',
+            {/* ── Floating meta table with rounded corners ── */}
+            <div style={{
+              display: 'inline-flex',
+              background: 'rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.16)',
+              borderRadius: 14,
+              overflow: 'hidden',
             }}>
-              <div style={{
-                fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.42)', marginBottom: 8,
-              }}>
-                {label}
-              </div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', lineHeight: 1.35 }}>
-                {val}
-              </div>
+              {metaItems.map(([label, val], i) => (
+                <div key={label} style={{
+                  padding: '16px 28px',
+                  borderRight: i < metaItems.length - 1
+                    ? '1px solid rgba(255,255,255,0.14)'
+                    : 'none',
+                }}>
+                  <div style={{
+                    fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.45)', marginBottom: 7,
+                  }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
+                    {val}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
