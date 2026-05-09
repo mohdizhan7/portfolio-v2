@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import Nav from '@/components/Nav';
 import { caseStudies, getCaseStudy } from '@/lib/caseStudies';
 
 export function generateStaticParams() {
@@ -33,6 +32,235 @@ const SECTIONS = [
   { number: '05', title: 'The Lesson',    key: 'lesson'    as const },
 ];
 
+/* ── Backlog visual components ──────────────────────────────────────── */
+
+function SituationMetrics() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{
+        padding: '28px 32px',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--line)',
+        borderRadius: 12,
+      }}>
+        <div style={{
+          fontSize: 11, letterSpacing: '0.18em',
+          textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 16,
+        }}>
+          On-Time Delivery — Crisis Start
+        </div>
+        <div style={{
+          fontSize: 'clamp(52px, 6vw, 72px)',
+          fontWeight: 700, color: '#ef4444', lineHeight: 1, marginBottom: 16,
+        }}>
+          10%
+        </div>
+        <div style={{
+          height: 6, background: 'rgba(239,68,68,0.12)',
+          borderRadius: 4, marginBottom: 16,
+        }}>
+          <div style={{ height: '100%', width: '10%', background: '#ef4444', borderRadius: 4 }} />
+        </div>
+        <div style={{ fontSize: 13, color: 'var(--fg-3)', lineHeight: 1.65 }}>
+          Staff had returned to their hometowns overnight. Shipments stacking on the floor
+          with no data in the system.
+        </div>
+      </div>
+
+      <div style={{
+        padding: '28px 32px',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--line)',
+        borderRadius: 12,
+      }}>
+        <div style={{
+          fontSize: 11, letterSpacing: '0.18em',
+          textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 16,
+        }}>
+          Shipments Backlogged
+        </div>
+        <div style={{
+          fontSize: 'clamp(52px, 6vw, 72px)',
+          fontWeight: 700, lineHeight: 1, marginBottom: 12,
+        }}>
+          150K
+        </div>
+        <div style={{ fontSize: 13, color: 'var(--fg-3)', lineHeight: 1.65 }}>
+          SLA penalties mounting. No directive from above. No playbook. The call was mine.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CallInsight() {
+  return (
+    <div style={{ borderLeft: '3px solid var(--fg)', paddingLeft: 32, paddingTop: 4 }}>
+      <div style={{
+        fontSize: 11, letterSpacing: '0.18em',
+        textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 24,
+      }}>
+        The Insight
+      </div>
+      <p style={{
+        fontSize: 19, fontWeight: 600, lineHeight: 1.6,
+        color: 'var(--fg)', margin: '0 0 24px',
+      }}>
+        If we could find vendors who already had authorised access to restricted government
+        localities, we could deliver where no conventional last-mile network could reach.
+      </p>
+      <p style={{ fontSize: 14, color: 'var(--fg-3)', lineHeight: 1.65, margin: 0 }}>
+        Standard couriers were being turned back at checkpoints. The access existed — it just
+        wasn&apos;t visible to anyone who hadn&apos;t lived and worked inside those areas.
+      </p>
+    </div>
+  );
+}
+
+function ExecutionTimeline() {
+  const phases = [
+    {
+      label: 'Pre-Launch',
+      color: '#6b7280',
+      title: 'Build the access network',
+      desc: 'Source vendors with existing government-locality access. Brief them, negotiate per-shipment rates (COVID meant fair pricing was fast), arrange official movement passes so routes would not be stopped at checkpoints.',
+    },
+    {
+      label: 'Day 1',
+      color: '#3b82f6',
+      title: 'Letters & documents — live network test',
+      desc: '~100 shipments per vendor. Delivered to security personnel (office staff absent due to lockdown). Leadership approves the handover protocol. Network confirmed operational.',
+    },
+    {
+      label: 'Days 2 – 3',
+      color: '#3b82f6',
+      title: 'Full document push',
+      desc: 'Scale to 300–400 shipments per vendor per day. Entire document backlog cleared within two days.',
+    },
+    {
+      label: 'Day 4',
+      color: '#f59e0b',
+      title: 'Larger parcels & residential addresses',
+      desc: 'Direct calls to recipients — most request RTO; rest approved for security handover. Vegetable and newspaper vendors (already on daily rounds through the same streets) take the residential addresses.',
+    },
+    {
+      label: 'Days 5 – 7',
+      color: '#22c55e',
+      title: 'Full clear',
+      desc: 'All remaining shipments delivered or returned to origin. Every open CRM ticket closed. Network stood down.',
+    },
+  ];
+
+  return (
+    <div style={{ marginTop: 56, paddingTop: 48, borderTop: '1px solid var(--line)' }}>
+      <div style={{
+        fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+        color: 'var(--fg-4)', marginBottom: 40, fontWeight: 600,
+      }}>
+        Execution — Phase by Phase
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+        {phases.map((phase, i) => (
+          <div
+            key={phase.label}
+            style={{ display: 'flex', gap: 24, paddingBottom: i < phases.length - 1 ? 36 : 0 }}
+          >
+            {/* Dot + connecting line */}
+            <div style={{
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', flexShrink: 0, width: 16,
+            }}>
+              <div style={{
+                width: 10, height: 10, borderRadius: '50%',
+                background: phase.color, flexShrink: 0, marginTop: 5,
+              }} />
+              {i < phases.length - 1 && (
+                <div style={{
+                  width: 1, flex: 1, background: 'var(--line)', marginTop: 8,
+                }} />
+              )}
+            </div>
+            {/* Text */}
+            <div style={{ paddingBottom: 4 }}>
+              <div style={{
+                fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
+                textTransform: 'uppercase', color: phase.color, marginBottom: 6,
+              }}>
+                {phase.label}
+              </div>
+              <div style={{
+                fontSize: 15, fontWeight: 600, marginBottom: 8,
+                color: 'var(--fg)', lineHeight: 1.35,
+              }}>
+                {phase.title}
+              </div>
+              <div style={{ fontSize: 14, color: 'var(--fg-3)', lineHeight: 1.7 }}>
+                {phase.desc}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ImpactChart() {
+  const bars = [
+    { label: 'Before — Operations collapsed', value: 10, color: '#ef4444' },
+    { label: 'After — Alternative network live', value: 70, color: '#22c55e' },
+  ];
+
+  return (
+    <div style={{
+      padding: '32px',
+      background: 'var(--bg-card)',
+      border: '1px solid var(--line)',
+      borderRadius: 12,
+    }}>
+      <div style={{
+        fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase',
+        color: 'var(--fg-4)', marginBottom: 32,
+      }}>
+        On-Time Delivery — Crisis Recovery
+      </div>
+
+      {bars.map((bar, i) => (
+        <div key={bar.label} style={{ marginBottom: i < bars.length - 1 ? 32 : 0 }}>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between',
+            alignItems: 'baseline', marginBottom: 12,
+          }}>
+            <span style={{ fontSize: 13, color: 'var(--fg-3)', lineHeight: 1.4, maxWidth: '62%' }}>
+              {bar.label}
+            </span>
+            <span style={{ fontSize: 28, fontWeight: 700, color: bar.color }}>
+              {bar.value}%
+            </span>
+          </div>
+          <div style={{ height: 8, background: 'rgba(128,128,128,0.12)', borderRadius: 4 }}>
+            <div style={{
+              height: '100%', width: `${bar.value}%`,
+              background: bar.color, borderRadius: 4,
+            }} />
+          </div>
+        </div>
+      ))}
+
+      <div style={{
+        marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--line)',
+        fontSize: 13, color: 'var(--fg-4)', lineHeight: 1.65,
+      }}>
+        Some RTO was unavoidable — government offices remained shut. The real comparison
+        is 70% vs. the alternative: 0%.
+      </div>
+    </div>
+  );
+}
+
+/* ── Page ───────────────────────────────────────────────────────────── */
+
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const cs = getCaseStudy(slug);
@@ -40,269 +268,272 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   const currentIndex = caseStudies.findIndex(c => c.slug === cs.slug);
   const related = caseStudies.filter((_, i) => i !== currentIndex).slice(0, 2);
+  const isBacklog = cs.slug === 'the-backlog';
+
+  const metaItems: [string, string][] = [
+    ['Company', cs.client],
+    ['Year', cs.year],
+    ['Type', cs.tags.join(' · ')],
+    ['Role', cs.role],
+  ];
 
   return (
-    <>
-      <Nav />
+    <main>
 
-      <main style={{ paddingTop: 80 }}>
+      {/* ── Hero: full-bleed image, title at bottom-left ─────────────── */}
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        height: 'clamp(560px, 90vh, 900px)',
+        backgroundColor: '#0a0a0a',
+        overflow: 'hidden',
+      }}>
+        <Image
+          src={cs.cover}
+          alt={cs.title}
+          fill
+          priority
+          style={{ objectFit: 'cover', opacity: 0.75 }}
+          sizes="100vw"
+        />
+        {/* Gradient — clear at top, dark at bottom so title reads clean */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.82) 100%)',
+        }} />
 
-        {/* ── Full-bleed hero image ────────────────────────────────────── */}
-        <div style={{ position: 'relative', width: '100%', height: 'clamp(280px, 44vw, 580px)' }}>
-          <Image
-            src={cs.cover}
-            alt={cs.title}
-            fill
-            priority
-            style={{ objectFit: 'cover' }}
-            sizes="100vw"
-          />
-          {/* subtle bottom fade so title reads clean */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to bottom, transparent 55%, var(--bg) 100%)',
-          }} />
+        {/* ── Minimal case-study nav ───────────────── */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0,
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '28px clamp(24px, 5vw, 64px)',
+          zIndex: 10,
+        }}>
+          <Link href="/" style={{
+            color: '#ffffff', fontWeight: 800,
+            fontSize: 18, letterSpacing: '-0.02em',
+          }}>
+            MI
+          </Link>
+          <Link href="/" style={{
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase',
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.18)',
+            borderRadius: 24, padding: '9px 20px',
+            backdropFilter: 'blur(10px)',
+          }}>
+            ← Back Home
+          </Link>
         </div>
 
-        {/* ── Title block ─────────────────────────────────────────────── */}
+        {/* ── Title block — sits at the bottom-left ─── */}
         <div style={{
-          maxWidth: 800,
-          margin: '0 auto',
-          padding: '0 clamp(24px, 4.5vw, 48px)',
-          textAlign: 'center',
+          position: 'absolute', bottom: 0, left: 0, right: 0,
+          padding: '0 clamp(24px, 5vw, 64px) clamp(48px, 8vh, 80px)',
         }}>
-          {/* breadcrumb + status */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            gap: 12, marginBottom: 32,
-          }}>
-            <Link
-              href="/#projects"
-              style={{ fontSize: 13, color: 'var(--fg-3)', display: 'inline-flex', alignItems: 'center', gap: 6 }}
-            >
-              ← Projects
-            </Link>
-            {cs.status && (
-              <span style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: '#d97706',
-                background: 'rgba(217,119,6,0.1)',
-                border: '1px solid rgba(217,119,6,0.25)',
-                borderRadius: 20, padding: '3px 10px',
-              }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#d97706', flexShrink: 0 }} />
-                {cs.status}
-              </span>
-            )}
-          </div>
-
-          <p style={{
-            fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
-            color: 'var(--fg-4)', marginBottom: 16,
-          }}>
-            Case Study {cs.number}
-          </p>
-
+          {cs.status && (
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+              textTransform: 'uppercase', color: '#fbbf24',
+              background: 'rgba(251,191,36,0.12)',
+              border: '1px solid rgba(251,191,36,0.3)',
+              borderRadius: 20, padding: '4px 12px', marginBottom: 20,
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24', flexShrink: 0 }} />
+              {cs.status}
+            </div>
+          )}
           <h1 style={{
-            fontSize: 'clamp(36px, 5.5vw, 72px)',
-            fontWeight: 700,
-            letterSpacing: '-0.03em',
-            lineHeight: 1.06,
-            marginBottom: 20,
+            fontSize: 'clamp(48px, 7.5vw, 100px)',
+            fontWeight: 800, color: '#ffffff',
+            lineHeight: 1.02, letterSpacing: '-0.035em',
+            margin: '0 0 16px', maxWidth: 900,
           }}>
             {cs.title}
           </h1>
-
           <p style={{
-            fontSize: 'clamp(16px, 2vw, 20px)',
-            color: 'var(--fg-2)',
-            lineHeight: 1.55,
-            marginBottom: 48,
+            fontSize: 'clamp(15px, 1.8vw, 19px)',
+            color: 'rgba(255,255,255,0.62)',
+            margin: 0, maxWidth: 640, lineHeight: 1.5,
           }}>
             {cs.subtitle}
           </p>
-
-          {/* Meta strip */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '12px 0',
-            borderTop: '1px solid var(--line)',
-            borderBottom: '1px solid var(--line)',
-            padding: '24px 0',
-            marginBottom: 72,
-          }}>
-            {[['Client', cs.client], ['Role', cs.role], ['Timeline', cs.timeline], ['Scale', cs.scale]].map(([label, val], i, arr) => (
-              <div key={label} style={{
-                textAlign: 'center',
-                padding: '0 clamp(16px, 3vw, 40px)',
-                borderRight: i < arr.length - 1 ? '1px solid var(--line)' : 'none',
-              }}>
-                <div style={{
-                  fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                  color: 'var(--fg-4)', marginBottom: 6,
-                }}>
-                  {label}
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>{val}</div>
-              </div>
-            ))}
-          </div>
         </div>
+      </div>
 
-        {/* ── Metrics row ─────────────────────────────────────────────── */}
-        <div style={{
-          maxWidth: 900,
-          margin: '0 auto 96px',
-          padding: '0 clamp(24px, 4.5vw, 48px)',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 'clamp(32px, 5vw, 0px)',
-          justifyContent: 'space-around',
-        }}>
-          {cs.metrics.map(m => (
-            <div key={m.label} style={{ textAlign: 'center', flex: '1 1 160px' }}>
+      {/* ── Meta strip ──────────────────────────────────────────────── */}
+      <div style={{ borderBottom: '1px solid var(--line)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          {metaItems.map(([label, val], i) => (
+            <div key={label} style={{
+              padding: 'clamp(16px, 3vh, 28px) clamp(20px, 4vw, 48px)',
+              borderRight: i < metaItems.length - 1 ? '1px solid var(--line)' : 'none',
+            }}>
               <div style={{
-                fontSize: 'clamp(40px, 5.5vw, 64px)',
-                fontWeight: 700,
-                letterSpacing: '-0.035em',
-                lineHeight: 1,
-                marginBottom: 10,
+                fontSize: 10, letterSpacing: '0.18em',
+                textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 6,
               }}>
-                {m.value}
+                {label}
               </div>
-              <div style={{
-                fontSize: 13,
-                color: 'var(--fg-3)',
-                lineHeight: 1.4,
-                maxWidth: 160,
-                margin: '0 auto',
-              }}>
-                {m.label}
-              </div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--fg)' }}>{val}</div>
             </div>
           ))}
         </div>
+      </div>
 
-        {/* ── 5-section body ──────────────────────────────────────────── */}
-        <div style={{
-          maxWidth: 760,
-          margin: '0 auto',
-          padding: '0 clamp(24px, 4.5vw, 48px) 140px',
-        }}>
-          {SECTIONS.map((s, i) => {
-            const isLesson = s.key === 'lesson';
-            const text = cs.sections[s.key];
-            // Support multi-paragraph content (separated by \n\n)
-            const paragraphs = text.split('\n\n').filter(Boolean);
-
-            return (
-              <div
-                key={s.key}
-                style={{
-                  paddingTop: i === 0 ? 0 : 80,
-                  paddingBottom: isLesson ? 0 : 80,
-                  borderBottom: isLesson ? 'none' : '1px solid var(--line)',
-                }}
-              >
-                {/* Section anchor label */}
-                <div style={{ marginBottom: 28 }}>
-                  <span style={{
-                    fontSize: 'clamp(52px, 7vw, 80px)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.04em',
-                    color: 'var(--line)',
-                    lineHeight: 1,
-                    display: 'block',
-                    marginBottom: 4,
-                  }}>
-                    {s.number}
-                  </span>
-                  <span style={{
-                    fontSize: 13,
-                    fontWeight: 700,
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase',
-                    color: 'var(--fg-3)',
-                  }}>
-                    {s.title}
-                  </span>
-                </div>
-
-                {/* Body */}
-                {isLesson ? (
-                  <blockquote style={{
-                    margin: 0,
-                    padding: '28px 32px',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--line)',
-                    borderLeft: '3px solid var(--fg)',
-                    borderRadius: '0 8px 8px 0',
-                  }}>
-                    {paragraphs.map((para, pi) => (
-                      <p key={pi} style={{
-                        fontSize: 19,
-                        fontWeight: 500,
-                        lineHeight: 1.65,
-                        color: 'var(--fg)',
-                        fontStyle: 'italic',
-                        margin: pi > 0 ? '16px 0 0' : 0,
-                      }}>
-                        {para}
-                      </p>
-                    ))}
-                  </blockquote>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                    {paragraphs.map((para, pi) => (
-                      <p key={pi} style={{
-                        fontSize: 17,
-                        lineHeight: 1.85,
-                        color: 'var(--fg-2)',
-                        margin: 0,
-                      }}>
-                        {para}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* ── Related ─────────────────────────────────────────────────── */}
-        {related.length > 0 && (
-          <div style={{
-            borderTop: '1px solid var(--line)',
-            padding: 'clamp(48px, 6vw, 80px) clamp(24px, 4.5vw, 64px)',
-            maxWidth: 1100, margin: '0 auto',
-          }}>
-            <div className="label" style={{ marginBottom: 28 }}>More case studies</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
-              {related.map(r => (
-                <Link key={r.slug} href={`/work/${r.slug}`} className="related-card">
-                  <div style={{
-                    position: 'relative', width: 56, height: 56, flexShrink: 0,
-                    borderRadius: 6, overflow: 'hidden',
-                    border: '1px solid var(--line)',
-                  }}>
-                    <Image src={r.cover} alt={r.title} fill style={{ objectFit: 'cover' }} sizes="56px" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{r.title}</div>
-                    <div style={{ fontSize: 12, color: 'var(--fg-3)' }}>{r.subtitle}</div>
-                  </div>
-                </Link>
-              ))}
+      {/* ── Metrics row ─────────────────────────────────────────────── */}
+      <div style={{
+        maxWidth: 1000, margin: '0 auto',
+        padding: 'clamp(48px, 7vw, 80px) clamp(24px, 5vw, 64px)',
+        borderBottom: '1px solid var(--line)',
+        display: 'flex', flexWrap: 'wrap',
+        gap: 'clamp(40px, 5vw, 0px)',
+        justifyContent: 'space-around',
+      }}>
+        {cs.metrics.map(m => (
+          <div key={m.label} style={{ textAlign: 'center', flex: '1 1 160px' }}>
+            <div style={{
+              fontSize: 'clamp(40px, 5.5vw, 64px)',
+              fontWeight: 700, letterSpacing: '-0.035em',
+              lineHeight: 1, marginBottom: 10,
+            }}>
+              {m.value}
+            </div>
+            <div style={{
+              fontSize: 13, color: 'var(--fg-3)',
+              lineHeight: 1.4, maxWidth: 160, margin: '0 auto',
+            }}>
+              {m.label}
             </div>
           </div>
-        )}
+        ))}
+      </div>
 
-      </main>
-    </>
+      {/* ── 5-section body ──────────────────────────────────────────── */}
+      {SECTIONS.map(s => {
+        const isLesson = s.key === 'lesson';
+        const text = cs.sections[s.key];
+        const paragraphs = text.split('\n\n').filter(Boolean);
+
+        // Backlog: sections that get a side visual (two-column)
+        const hasSideVisual =
+          isBacklog && (s.key === 'situation' || s.key === 'call' || s.key === 'impact');
+        // Backlog: execution gets a full-width timeline below the text
+        const hasBottomTimeline = isBacklog && s.key === 'execution';
+
+        let sideVisual = null;
+        if (isBacklog) {
+          if (s.key === 'situation') sideVisual = <SituationMetrics />;
+          else if (s.key === 'call')  sideVisual = <CallInsight />;
+          else if (s.key === 'impact') sideVisual = <ImpactChart />;
+        }
+
+        return (
+          <section
+            key={s.key}
+            style={{
+              borderBottom: '1px solid var(--line)',
+              padding: 'clamp(56px, 8vw, 96px) clamp(24px, 5vw, 64px)',
+              maxWidth: 1200, margin: '0 auto',
+            }}
+          >
+            {/* Section label */}
+            <div style={{
+              fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'var(--fg-4)', marginBottom: 40, fontWeight: 600,
+            }}>
+              {s.number} — {s.title}
+            </div>
+
+            {/* Body */}
+            {isLesson ? (
+              <blockquote style={{
+                margin: 0, padding: '28px 32px',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--line)',
+                borderLeft: '3px solid var(--fg)',
+                borderRadius: '0 8px 8px 0',
+                maxWidth: 760,
+              }}>
+                {paragraphs.map((para, pi) => (
+                  <p key={pi} style={{
+                    fontSize: 19, fontWeight: 500, lineHeight: 1.65,
+                    color: 'var(--fg)', fontStyle: 'italic',
+                    margin: pi > 0 ? '16px 0 0' : 0,
+                  }}>
+                    {para}
+                  </p>
+                ))}
+              </blockquote>
+            ) : hasSideVisual ? (
+              /* Two-column: text left, visual right */
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+                gap: 'clamp(32px, 5vw, 72px)',
+                alignItems: 'start',
+              }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  {paragraphs.map((para, pi) => (
+                    <p key={pi} style={{
+                      fontSize: 17, lineHeight: 1.85, color: 'var(--fg-2)', margin: 0,
+                    }}>
+                      {para}
+                    </p>
+                  ))}
+                </div>
+                <div>{sideVisual}</div>
+              </div>
+            ) : (
+              /* Single column */
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 760 }}>
+                {paragraphs.map((para, pi) => (
+                  <p key={pi} style={{
+                    fontSize: 17, lineHeight: 1.85, color: 'var(--fg-2)', margin: 0,
+                  }}>
+                    {para}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Execution phase timeline (Backlog only) */}
+            {hasBottomTimeline && <ExecutionTimeline />}
+          </section>
+        );
+      })}
+
+      {/* ── Related case studies ─────────────────────────────────────── */}
+      {related.length > 0 && (
+        <div style={{
+          borderTop: '1px solid var(--line)',
+          padding: 'clamp(48px, 6vw, 80px) clamp(24px, 4.5vw, 64px)',
+          maxWidth: 1200, margin: '0 auto',
+        }}>
+          <div className="label" style={{ marginBottom: 28 }}>More case studies</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+            {related.map(r => (
+              <Link key={r.slug} href={`/work/${r.slug}`} className="related-card">
+                <div style={{
+                  position: 'relative', width: 56, height: 56, flexShrink: 0,
+                  borderRadius: 6, overflow: 'hidden',
+                  border: '1px solid var(--line)',
+                }}>
+                  <Image src={r.cover} alt={r.title} fill style={{ objectFit: 'cover' }} sizes="56px" />
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{r.title}</div>
+                  <div style={{ fontSize: 12, color: 'var(--fg-3)' }}>{r.subtitle}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+    </main>
   );
 }
