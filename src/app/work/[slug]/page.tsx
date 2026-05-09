@@ -296,10 +296,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           style={{ objectFit: 'cover', opacity: 0.75 }}
           sizes="100vw"
         />
-        {/* Gradient — clear at top, dark at bottom so title reads clean */}
+        {/* Gradient — clear at top, darkens progressively for text legibility */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.82) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.72) 65%, rgba(0,0,0,0.92) 100%)',
         }} />
 
         {/* ── Minimal case-study nav ───────────────── */}
@@ -310,14 +310,17 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           zIndex: 10,
         }}>
           <Link href="/" style={{
-            color: '#ffffff', fontWeight: 800,
-            fontSize: 18, letterSpacing: '-0.02em',
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: 13, fontWeight: 600,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
           }}>
             MI
           </Link>
           <Link href="/" style={{
             color: 'rgba(255,255,255,0.9)',
-            fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase',
+            fontSize: 13, fontWeight: 600,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'rgba(255,255,255,0.08)',
             border: '1px solid rgba(255,255,255,0.18)',
@@ -328,10 +331,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           </Link>
         </div>
 
-        {/* ── Title block — sits at the bottom-left ─── */}
+        {/* ── Title + meta — sits at the bottom-left ─── */}
         <div style={{
           position: 'absolute', bottom: 0, left: 0, right: 0,
-          padding: '0 clamp(24px, 5vw, 64px) clamp(48px, 8vh, 80px)',
+          padding: '0 clamp(24px, 5vw, 64px) clamp(40px, 6vh, 64px)',
         }}>
           {cs.status && (
             <div style={{
@@ -361,26 +364,30 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           }}>
             {cs.subtitle}
           </p>
-        </div>
-      </div>
 
-      {/* ── Meta strip ──────────────────────────────────────────────── */}
-      <div style={{ borderBottom: '1px solid var(--line)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-          {metaItems.map(([label, val], i) => (
-            <div key={label} style={{
-              padding: 'clamp(16px, 3vh, 28px) clamp(20px, 4vw, 48px)',
-              borderRight: i < metaItems.length - 1 ? '1px solid var(--line)' : 'none',
-            }}>
-              <div style={{
-                fontSize: 10, letterSpacing: '0.18em',
-                textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 6,
-              }}>
-                {label}
+          {/* ── Meta items — left-aligned under the title, inside the hero ── */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '20px 52px',
+            marginTop: 40,
+            paddingTop: 32,
+            borderTop: '1px solid rgba(255,255,255,0.14)',
+          }}>
+            {metaItems.map(([label, val]) => (
+              <div key={label}>
+                <div style={{
+                  fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.38)', marginBottom: 6,
+                }}>
+                  {label}
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
+                  {val}
+                </div>
               </div>
-              <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--fg)' }}>{val}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
