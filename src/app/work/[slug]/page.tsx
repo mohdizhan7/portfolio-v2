@@ -289,6 +289,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         title={cs.title}
         cover={cs.cover}
         status={cs.status}
+        number={cs.number}
         metaItems={metaItems}
       />
 
