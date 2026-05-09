@@ -395,7 +395,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           maxWidth: 1200, margin: '0 auto',
         }}>
           <div className="label" style={{ marginBottom: 28 }}>More case studies</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+          <div className="cs-related-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
             {related.map(r => (
               <Link key={r.slug} href={`/work/${r.slug}`} className="related-card">
                 <div style={{

@@ -90,6 +90,7 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
 
       {/* ── Background numeral (large outlined, low opacity) ── */}
       <m.div
+        className="cs-hero-numeral"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.0, delay: hasTransition ? 0.38 : 0.22 }}
@@ -155,6 +156,7 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
 
           {/* Floating meta table */}
           <m.div
+            className="cs-meta"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE, delay: td(status ? 0.36 : 0.24) }}
@@ -169,7 +171,7 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
             }}
           >
             {metaItems.map(([label, val], i) => (
-              <div key={label} style={{
+              <div key={label} className="cs-meta-cell" style={{
                 padding: '16px 28px',
                 borderRight: i < metaItems.length - 1 ? '1px solid rgba(255,255,255,0.14)' : 'none',
               }}>
@@ -190,6 +192,7 @@ export default function CaseStudyHero({ title, cover, status, number, metaItems 
 
       {/* ── Scroll indicator — right edge ── */}
       <m.div
+        className="cs-hero-scroll"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7, delay: td(0.6) }}
