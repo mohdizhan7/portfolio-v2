@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { m } from 'framer-motion';
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,27 +29,32 @@ export default function Nav() {
         transition: 'padding 0.45s cubic-bezier(0.16,1,0.3,1)',
       }}>
         {/* ── Inner: transitions from full-width bar → centered pill ── */}
-        <nav style={{
-          pointerEvents: 'auto',
-          maxWidth: scrolled ? 1140 : 9999,
-          margin: '0 auto',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: scrolled ? '16px 32px' : '20px clamp(20px, 4.5vw, 64px)',
-          background: scrolled ? 'rgba(255,255,255,0.72)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(24px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(24px)' : 'none',
-          borderRadius: scrolled ? 100 : 0,
-          border: scrolled ? '1px solid rgba(0,0,0,0.08)' : '1px solid transparent',
-          boxShadow: scrolled ? '0 2px 24px rgba(0,0,0,0.07)' : 'none',
-          transition: [
-            'max-width 0.45s cubic-bezier(0.16,1,0.3,1)',
-            'padding 0.45s cubic-bezier(0.16,1,0.3,1)',
-            'background 0.4s',
-            'border-radius 0.45s cubic-bezier(0.16,1,0.3,1)',
-            'border-color 0.4s',
-            'box-shadow 0.4s',
-          ].join(', '),
-        }}>
+        <m.nav
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+          style={{
+            pointerEvents: 'auto',
+            maxWidth: scrolled ? 1140 : 9999,
+            margin: '0 auto',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: scrolled ? '16px 32px' : '20px clamp(20px, 4.5vw, 64px)',
+            background: scrolled ? 'rgba(255,255,255,0.72)' : 'transparent',
+            backdropFilter: scrolled ? 'blur(24px)' : 'none',
+            WebkitBackdropFilter: scrolled ? 'blur(24px)' : 'none',
+            borderRadius: scrolled ? 100 : 0,
+            border: scrolled ? '1px solid rgba(0,0,0,0.08)' : '1px solid transparent',
+            boxShadow: scrolled ? '0 2px 24px rgba(0,0,0,0.07)' : 'none',
+            transition: [
+              'max-width 0.45s cubic-bezier(0.16,1,0.3,1)',
+              'padding 0.45s cubic-bezier(0.16,1,0.3,1)',
+              'background 0.4s',
+              'border-radius 0.45s cubic-bezier(0.16,1,0.3,1)',
+              'border-color 0.4s',
+              'box-shadow 0.4s',
+            ].join(', '),
+          }}
+        >
 
           {/* Left side: Logo + nav links */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
@@ -118,7 +124,7 @@ export default function Nav() {
               ))}
             </button>
           </div>
-        </nav>
+        </m.nav>
       </div>
 
       {/* Mobile menu overlay */}

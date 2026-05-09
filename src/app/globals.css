@@ -289,6 +289,13 @@ a {
 /* Hero layout */
 .hero-padding { padding: 0 64px; }
 
+/* Mask container for the sliding-up name reveal */
+.hero-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom; /* prevents descender clipping */
+}
+
 .hero-topbar {
   display: flex;
   align-items: center;

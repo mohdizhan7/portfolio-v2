@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { m } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 
 // ─── Live IST clock ──────────────────────────────────────────────────────────
 function LiveClock() {
@@ -52,21 +52,35 @@ function SkillsTicker() {
   );
 }
 
-// ─── Animation ───────────────────────────────────────────────────────────────
-const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (delay = 0) => ({
-    opacity: 1, y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-      delay,
-    },
-  }),
-};
-
 // ─── Hero ────────────────────────────────────────────────────────────────────
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
+  /**
+   * Phase 1 — name words: slide up from behind overflow:hidden mask.
+   * Phase 2 — secondary elements: subtle fade-up.
+   * Reduced-motion: all elements crossfade instantly, no y movement, no delay.
+   */
+  const maskWord = (delay: number) => ({
+    initial: { y: shouldReduceMotion ? 0 : '110%', opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    transition: {
+      duration: shouldReduceMotion ? 0.2 : 0.8,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      delay: shouldReduceMotion ? 0 : delay,
+    },
+  });
+
+  const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: shouldReduceMotion ? 0 : 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      duration: shouldReduceMotion ? 0.2 : 0.5,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      delay: shouldReduceMotion ? 0 : delay,
+    },
+  });
+
   return (
     <section
       className="hero-padding"
@@ -104,7 +118,7 @@ export default function Hero() {
 
         {/* ── Meta bar: location + status ──────────────────────────────── */}
         <m.div
-          variants={fadeUp} initial="hidden" animate="visible" custom={0}
+          {...fadeUp(0.62)}
           className="hero-topbar"
           style={{
             fontSize: 'clamp(16px, 1.8vw, 18px)',
@@ -122,39 +136,51 @@ export default function Hero() {
 
         {/* ── Divider ───────────────────────────────────────────────────── */}
         <m.div
-          variants={fadeUp} initial="hidden" animate="visible" custom={0.05}
-          style={{
-            borderBottom: '2px solid #000',
-            marginBottom: 'clamp(32px, 4vw, 48px)',
-          }}
+          {...fadeUp(0.67)}
+          style={{ borderBottom: '2px solid #000', marginBottom: 'clamp(32px, 4vw, 48px)' }}
         />
 
-        {/* ── H1 ────────────────────────────────────────────────────────── */}
-        <m.h1
-          variants={fadeUp} initial="hidden" animate="visible" custom={0.12}
-          style={{
-            fontSize: 'clamp(62px, 13vw, 100px)',
-            fontWeight: 600,
-            lineHeight: 1.04,
-            letterSpacing: '-0.03em',
-            color: 'var(--fg)',
-            maxWidth: 900,
-            marginBottom: 'clamp(70px, 8vw, 110px)',
-          }}
-        >
-          Hi, this is<br />Mohammed Izhan.
-        </m.h1>
+        {/* ── H1: masked word-by-word reveal ────────────────────────────── */}
+        <h1 style={{
+          fontSize: 'clamp(62px, 13vw, 100px)',
+          fontWeight: 600,
+          lineHeight: 1.04,
+          letterSpacing: '-0.03em',
+          color: 'var(--fg)',
+          maxWidth: 900,
+          marginBottom: 'clamp(70px, 8vw, 110px)',
+        }}>
+          {/* "Hi, this is" — first to appear */}
+          <span className="hero-mask">
+            <m.span style={{ display: 'inline-block' }} {...maskWord(0.05)}>
+              Hi, this is
+            </m.span>
+          </span>
+          <br />
+          {/* "Mohammed " — staggered after */}
+          <span className="hero-mask">
+            <m.span style={{ display: 'inline-block' }} {...maskWord(0.18)}>
+              Mohammed&nbsp;
+            </m.span>
+          </span>
+          {/* "Izhan." — trails Mohammed */}
+          <span className="hero-mask">
+            <m.span style={{ display: 'inline-block' }} {...maskWord(0.3)}>
+              Izhan.
+            </m.span>
+          </span>
+        </h1>
 
         {/* ── Info rows ────────────────────────────────────────────────── */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(6px, 1vw, 10px)' }}>
           {([
-            ['Currently →',  ' Project Manager @ StackBox', 0.22],
-            ['Previously →', ' Edgistify · Mindseed · DTDC', 0.3],
-            ['Delivering →', ' End-to-end, every time 📦', 0.38],
+            ['Currently →',  'Project Manager @ StackBox',  0.72],
+            ['Previously →', 'Edgistify · Mindseed · DTDC', 0.80],
+            ['Delivering →', 'End-to-end, every time 📦',   0.88],
           ] as const).map(([label, value, delay]) => (
             <m.div
               key={label}
-              variants={fadeUp} initial="hidden" animate="visible" custom={delay}
+              {...fadeUp(delay)}
               style={{
                 fontSize: 'clamp(17px, 2.2vw, 20px)',
                 fontWeight: 400,
@@ -164,14 +190,14 @@ export default function Hero() {
               }}
             >
               <span>{label} </span>
-              <b style={{ fontWeight: 700, color: 'var(--fg)' }}>{value.trim()}</b>
+              <b style={{ fontWeight: 700, color: 'var(--fg)' }}>{value}</b>
             </m.div>
           ))}
         </div>
 
         {/* ── Skills ticker pinned to bottom ───────────────────────────── */}
         <div className="ticker-wrapper" style={{ marginTop: 'auto', paddingTop: 'clamp(32px, 5vw, 56px)' }}>
-          <m.div variants={fadeUp} initial="hidden" animate="visible" custom={0.46}>
+          <m.div {...fadeUp(0.95)}>
             <SkillsTicker />
           </m.div>
         </div>
