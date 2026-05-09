@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import NavCaseStudy from '@/components/NavCaseStudy';
+import CaseStudyHero from '@/components/CaseStudyHero';
 import { caseStudies, getCaseStudy } from '@/lib/caseStudies';
 
 export function generateStaticParams() {
@@ -283,93 +284,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <NavCaseStudy />
       <main>
 
-      {/* ── Hero: full-viewport, title fills height, meta table pinned to bottom ── */}
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        minHeight: 640,
-        backgroundColor: '#0a0a0a',
-        overflow: 'hidden',
-      }}>
-        <Image
-          src={cs.cover}
-          alt={cs.title}
-          fill
-          priority
-          style={{ objectFit: 'cover', opacity: 0.7 }}
-          sizes="100vw"
-        />
-        {/* Gradient — transparent top, very dark at bottom */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.88) 100%)',
-        }} />
-
-        {/* ── Title + floating meta table — bottom-aligned together ── */}
-        <div style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0, bottom: 0,
-          display: 'flex',
-          alignItems: 'flex-end',
-          padding: '0 clamp(24px, 4.5vw, 64px) clamp(40px, 7vh, 72px)',
-        }}>
-          <div>
-            {cs.status && (
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-                textTransform: 'uppercase', color: '#fbbf24',
-                background: 'rgba(251,191,36,0.12)',
-                border: '1px solid rgba(251,191,36,0.3)',
-                borderRadius: 20, padding: '4px 12px', marginBottom: 24,
-              }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24', flexShrink: 0 }} />
-                {cs.status}
-              </div>
-            )}
-
-            <h1 style={{
-              fontSize: 'clamp(56px, 9vw, 128px)',
-              fontWeight: 800, color: '#ffffff',
-              lineHeight: 1.0, letterSpacing: '-0.04em',
-              margin: '0 0 28px',
-            }}>
-              {cs.title}
-            </h1>
-
-            {/* ── Floating meta table with rounded corners ── */}
-            <div style={{
-              display: 'inline-flex',
-              background: 'rgba(255,255,255,0.08)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.16)',
-              borderRadius: 14,
-              overflow: 'hidden',
-            }}>
-              {metaItems.map(([label, val], i) => (
-                <div key={label} style={{
-                  padding: '16px 28px',
-                  borderRight: i < metaItems.length - 1
-                    ? '1px solid rgba(255,255,255,0.14)'
-                    : 'none',
-                }}>
-                  <div style={{
-                    fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.45)', marginBottom: 7,
-                  }}>
-                    {label}
-                  </div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
-                    {val}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* ── Hero ── */}
+      <CaseStudyHero
+        title={cs.title}
+        cover={cs.cover}
+        status={cs.status}
+        metaItems={metaItems}
+      />
 
       {/* ── 5-section body ──────────────────────────────────────────── */}
       {SECTIONS.map(s => {
