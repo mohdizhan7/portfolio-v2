@@ -47,9 +47,35 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       <main style={{ paddingTop: 80 }}>
 
-        {/* ── Header ──────────────────────────────────────────────────── */}
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '80px clamp(24px, 4.5vw, 64px) 64px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+        {/* ── Full-bleed hero image ────────────────────────────────────── */}
+        <div style={{ position: 'relative', width: '100%', height: 'clamp(280px, 44vw, 580px)' }}>
+          <Image
+            src={cs.cover}
+            alt={cs.title}
+            fill
+            priority
+            style={{ objectFit: 'cover' }}
+            sizes="100vw"
+          />
+          {/* subtle bottom fade so title reads clean */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to bottom, transparent 55%, var(--bg) 100%)',
+          }} />
+        </div>
+
+        {/* ── Title block ─────────────────────────────────────────────── */}
+        <div style={{
+          maxWidth: 800,
+          margin: '0 auto',
+          padding: '0 clamp(24px, 4.5vw, 48px)',
+          textAlign: 'center',
+        }}>
+          {/* breadcrumb + status */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            gap: 12, marginBottom: 32,
+          }}>
             <Link
               href="/#projects"
               style={{ fontSize: 13, color: 'var(--fg-3)', display: 'inline-flex', alignItems: 'center', gap: 6 }}
@@ -72,119 +98,152 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             )}
           </div>
 
-          <div style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-3)', marginBottom: 16 }}>
+          <p style={{
+            fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
+            color: 'var(--fg-4)', marginBottom: 16,
+          }}>
             Case Study {cs.number}
-          </div>
+          </p>
 
           <h1 style={{
-            fontSize: 'clamp(40px, 6vw, 80px)',
+            fontSize: 'clamp(36px, 5.5vw, 72px)',
             fontWeight: 700,
             letterSpacing: '-0.03em',
-            lineHeight: 1.05,
-            marginBottom: 16,
+            lineHeight: 1.06,
+            marginBottom: 20,
           }}>
             {cs.title}
           </h1>
 
-          <p style={{ fontSize: 20, color: 'var(--fg-2)', maxWidth: 640, lineHeight: 1.55, marginBottom: 48 }}>
+          <p style={{
+            fontSize: 'clamp(16px, 2vw, 20px)',
+            color: 'var(--fg-2)',
+            lineHeight: 1.55,
+            marginBottom: 48,
+          }}>
             {cs.subtitle}
           </p>
 
-          {/* Meta */}
+          {/* Meta strip */}
           <div style={{
-            display: 'flex', flexWrap: 'wrap', gap: '16px 48px',
-            borderTop: '1px solid var(--line)', paddingTop: 28,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '12px 0',
+            borderTop: '1px solid var(--line)',
+            borderBottom: '1px solid var(--line)',
+            padding: '24px 0',
+            marginBottom: 72,
           }}>
-            {[['Client', cs.client], ['Role', cs.role], ['Timeline', cs.timeline], ['Scale', cs.scale]].map(([label, val]) => (
-              <div key={label}>
-                <div style={{ fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 5 }}>
+            {[['Client', cs.client], ['Role', cs.role], ['Timeline', cs.timeline], ['Scale', cs.scale]].map(([label, val], i, arr) => (
+              <div key={label} style={{
+                textAlign: 'center',
+                padding: '0 clamp(16px, 3vw, 40px)',
+                borderRight: i < arr.length - 1 ? '1px solid var(--line)' : 'none',
+              }}>
+                <div style={{
+                  fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
+                  color: 'var(--fg-4)', marginBottom: 6,
+                }}>
                   {label}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>{val}</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>{val}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ── Cover image ─────────────────────────────────────────────── */}
-        <div style={{ maxWidth: 1100, margin: '0 auto 80px', padding: '0 clamp(24px, 4.5vw, 64px)' }}>
-          <div style={{
-            position: 'relative', width: '100%',
-            height: 'clamp(260px, 38vw, 520px)',
-            borderRadius: 12, overflow: 'hidden',
-            border: '1px solid var(--line)',
-          }}>
-            <Image src={cs.cover} alt={cs.title} fill style={{ objectFit: 'cover' }} priority sizes="(max-width: 1100px) 100vw, 1036px" />
-          </div>
-        </div>
-
         {/* ── Metrics row ─────────────────────────────────────────────── */}
         <div style={{
-          maxWidth: 1100, margin: '0 auto 80px',
-          padding: '0 clamp(24px, 4.5vw, 64px)',
-          display: 'flex', gap: 'clamp(32px, 6vw, 80px)',
+          maxWidth: 900,
+          margin: '0 auto 96px',
+          padding: '0 clamp(24px, 4.5vw, 48px)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 'clamp(32px, 5vw, 0px)',
+          justifyContent: 'space-around',
         }}>
           {cs.metrics.map(m => (
-            <div key={m.label}>
+            <div key={m.label} style={{ textAlign: 'center', flex: '1 1 160px' }}>
               <div style={{
-                fontSize: 'clamp(36px, 5vw, 56px)',
-                fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1,
-                marginBottom: 8,
+                fontSize: 'clamp(40px, 5.5vw, 64px)',
+                fontWeight: 700,
+                letterSpacing: '-0.035em',
+                lineHeight: 1,
+                marginBottom: 10,
               }}>
                 {m.value}
               </div>
-              <div style={{ fontSize: 13, color: 'var(--fg-3)', lineHeight: 1.4 }}>{m.label}</div>
+              <div style={{
+                fontSize: 13,
+                color: 'var(--fg-3)',
+                lineHeight: 1.4,
+                maxWidth: 160,
+                margin: '0 auto',
+              }}>
+                {m.label}
+              </div>
             </div>
           ))}
         </div>
 
         {/* ── 5-section body ──────────────────────────────────────────── */}
-        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 clamp(24px, 4.5vw, 64px) 120px' }}>
+        <div style={{
+          maxWidth: 760,
+          margin: '0 auto',
+          padding: '0 clamp(24px, 4.5vw, 48px) 140px',
+        }}>
           {SECTIONS.map((s, i) => {
             const isLesson = s.key === 'lesson';
             const text = cs.sections[s.key];
+            // Support multi-paragraph content (separated by \n\n)
+            const paragraphs = text.split('\n\n').filter(Boolean);
+
             return (
               <div
                 key={s.key}
                 style={{
-                  paddingTop: i === 0 ? 0 : 56,
-                  paddingBottom: 56,
+                  paddingTop: i === 0 ? 0 : 80,
+                  paddingBottom: isLesson ? 0 : 80,
                   borderBottom: isLesson ? 'none' : '1px solid var(--line)',
                 }}
               >
-                {/* Section label */}
-                <div style={{
-                  display: 'flex', alignItems: 'center', gap: 12,
-                  marginBottom: 20,
-                }}>
+                {/* Section anchor label */}
+                <div style={{ marginBottom: 28 }}>
                   <span style={{
-                    fontSize: 11, fontWeight: 700,
-                    letterSpacing: '0.15em', textTransform: 'uppercase',
-                    color: 'var(--fg-4)',
+                    fontSize: 'clamp(52px, 7vw, 80px)',
+                    fontWeight: 700,
+                    letterSpacing: '-0.04em',
+                    color: 'var(--line)',
+                    lineHeight: 1,
+                    display: 'block',
+                    marginBottom: 4,
                   }}>
                     {s.number}
                   </span>
                   <span style={{
-                    fontSize: 11, fontWeight: 700,
-                    letterSpacing: '0.15em', textTransform: 'uppercase',
+                    fontSize: 13,
+                    fontWeight: 700,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
                     color: 'var(--fg-3)',
                   }}>
                     {s.title}
                   </span>
                 </div>
 
-                {/* Body — lesson gets special treatment */}
+                {/* Body */}
                 {isLesson ? (
                   <blockquote style={{
                     margin: 0,
-                    padding: '24px 28px',
+                    padding: '28px 32px',
                     background: 'var(--bg-card)',
                     border: '1px solid var(--line)',
                     borderLeft: '3px solid var(--fg)',
                     borderRadius: '0 8px 8px 0',
                   }}>
                     <p style={{
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: 500,
                       lineHeight: 1.65,
                       color: 'var(--fg)',
@@ -195,14 +254,18 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                     </p>
                   </blockquote>
                 ) : (
-                  <p style={{
-                    fontSize: 17,
-                    lineHeight: 1.8,
-                    color: 'var(--fg-2)',
-                    margin: 0,
-                  }}>
-                    {text}
-                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                    {paragraphs.map((para, pi) => (
+                      <p key={pi} style={{
+                        fontSize: 17,
+                        lineHeight: 1.85,
+                        color: 'var(--fg-2)',
+                        margin: 0,
+                      }}>
+                        {para}
+                      </p>
+                    ))}
+                  </div>
                 )}
               </div>
             );
