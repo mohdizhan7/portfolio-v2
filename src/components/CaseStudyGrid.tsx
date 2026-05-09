@@ -40,13 +40,13 @@ function ProjectCard({ cs, index }: { cs: typeof caseStudies[0]; index: number }
       >
         {/* ── Left: text content ───────────────────── */}
         <div style={{
-          padding: 'clamp(24px, 3vw, 40px)',
+          padding: 'clamp(20px, 2vw, 28px)',
           display: 'flex',
           flexDirection: 'column',
         }}>
 
           {/* Row 1: number + status */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
             <span style={{
               fontSize: 12, fontWeight: 500,
               color: 'var(--fg-4)', letterSpacing: '0.04em',
@@ -72,29 +72,29 @@ function ProjectCard({ cs, index }: { cs: typeof caseStudies[0]; index: number }
           {/* Row 2: client / year */}
           <p style={{
             fontSize: 13, color: 'var(--fg-3)',
-            marginBottom: 10, lineHeight: 1.4,
+            marginBottom: 6, lineHeight: 1.4,
           }}>
             {cs.client} / {cs.year}
           </p>
 
           {/* Row 3: title */}
           <h3 style={{
-            fontSize: 'clamp(22px, 2.2vw, 30px)',
+            fontSize: 'clamp(18px, 1.8vw, 26px)',
             fontWeight: 700,
             letterSpacing: '-0.025em',
             lineHeight: 1.15,
-            marginBottom: 18,
+            marginBottom: 12,
           }}>
             {cs.title}
           </h3>
 
           {/* Row 4: tags */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: 'auto' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 'auto' }}>
             {cs.tags.map(tag => (
               <span key={tag} style={{
                 fontSize: 10, fontWeight: 600, letterSpacing: '0.1em',
                 textTransform: 'uppercase',
-                padding: '4px 10px',
+                padding: '3px 8px',
                 border: '1px solid var(--line)',
                 borderRadius: 4,
                 color: 'var(--fg-3)',
@@ -107,19 +107,19 @@ function ProjectCard({ cs, index }: { cs: typeof caseStudies[0]; index: number }
           {/* Row 5: metrics (pinned to bottom via margin-top: auto on tags) */}
           <div style={{
             display: 'flex',
-            gap: 'clamp(20px, 3vw, 36px)',
-            paddingTop: 24,
-            marginTop: 28,
+            gap: 'clamp(16px, 2.5vw, 28px)',
+            paddingTop: 16,
+            marginTop: 16,
             borderTop: '1px solid var(--line)',
           }}>
             {cs.metrics.map(m => (
               <div key={m.label}>
                 <div style={{
-                  fontSize: 'clamp(18px, 1.8vw, 24px)',
+                  fontSize: 'clamp(16px, 1.4vw, 20px)',
                   fontWeight: 700,
                   letterSpacing: '-0.02em',
                   lineHeight: 1.1,
-                  marginBottom: 5,
+                  marginBottom: 4,
                 }}>
                   {m.value}
                 </div>

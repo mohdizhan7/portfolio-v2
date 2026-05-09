@@ -265,7 +265,7 @@ a {
 .project-card-inner {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  min-height: 480px;
+  min-height: 300px;
 }
 
 /* Scale image on card hover */
@@ -282,7 +282,7 @@ a {
     min-height: unset;
   }
   .project-card-image {
-    height: 260px;
+    height: 200px;
   }
 }
 
