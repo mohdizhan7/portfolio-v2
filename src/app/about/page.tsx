@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Nav from '@/components/Nav';
 import ToolsLogoLoop from '@/components/ToolsLogoLoop';
 import LanyardDynamic from '@/components/LanyardDynamic';
+import Tenure from '@/components/Tenure';
 
 export const metadata: Metadata = {
   title: 'About — Mohammed Izhan Shaikh',
@@ -21,11 +22,11 @@ const APPROACH = [
   },
   {
     title: 'Process-First Mindset',
-    body: 'A warehouse runs on its processes, not its tools. Get the workflow right first — the software follows.',
+    body: 'A warehouse runs on its processes, not its tools. Get the workflow right first; the software follows.',
   },
   {
     title: 'Data-Driven Decisions',
-    body: 'Gut feel gets you started. Data gets you repeatable. KPI dashboards aren\'t overhead — they\'re how you know.',
+    body: 'Gut feel gets you started. Data gets you repeatable. KPI dashboards aren\'t overhead; they\'re how you know.',
   },
   {
     title: 'Outcome-Focused Execution',
@@ -63,10 +64,10 @@ const HOW_I_WORK = [
 ];
 
 const EXPERIENCE = [
-  { company: 'StackBox',            role: 'Assistant Project Manager',         period: 'Sep 2023 — Present',   duration: '2yr 7mo' },
-  { company: 'Edgistify',           role: 'Manager, Solution Design',          period: 'Aug 2022 — Sep 2023',  duration: '1yr 1mo' },
-  { company: 'Mindseed Education',  role: 'Manager, Procurement & Supply Chain', period: 'Dec 2021 — Aug 2022', duration: '8mo' },
-  { company: 'DTDC Express',        role: 'Branch Manager',                    period: 'Jan 2020 — Dec 2021',  duration: '2yr' },
+  { company: 'StackBox',            role: 'Assistant Project Manager',         period: 'Sep 2023 — Present',   duration: '', tenureStart: '2023-09-01' },
+  { company: 'Edgistify',           role: 'Manager, Solution Design',          period: 'Aug 2022 — Sep 2023',  duration: '1 yr 1 mo', tenureStart: '' },
+  { company: 'Mindseed Education',  role: 'Manager, Procurement & Supply Chain', period: 'Dec 2021 — Aug 2022', duration: '8 mo', tenureStart: '' },
+  { company: 'DTDC Express',        role: 'Branch Manager',                    period: 'Jan 2020 — Dec 2021',  duration: '2 yr', tenureStart: '' },
 ];
 
 const LABEL: React.CSSProperties = {
@@ -135,7 +136,7 @@ export default function AboutPage() {
             color: 'var(--fg)',
             maxWidth: 780,
           }}>
-            I work at the intersection of operations, technology, and execution —
+            I work at the intersection of operations, technology, and execution,
             turning <strong style={{ fontWeight: 700 }}>complex workflows</strong> into
             scalable systems. Six years across DTDC, Mindseed, Edgistify, and StackBox
             have taught me that the gap between a good plan and a working operation
@@ -182,14 +183,14 @@ export default function AboutPage() {
           <p style={{ ...LABEL, marginBottom: 32 }}>What Drives Me</p>
           <div style={{ maxWidth: 680, display: 'flex', flexDirection: 'column', gap: 16 }}>
             <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-2)', margin: 0 }}>
-              Operations isn&apos;t glamorous — it&apos;s early mornings, floor-level problems, and
+              Operations isn&apos;t glamorous. It&apos;s early mornings, floor-level problems, and
               decisions made with incomplete data. What drives me is the moment a warehouse that
               was <strong style={{ color: 'var(--fg)', fontWeight: 600 }}>chaotic becomes predictable</strong>.
               When a team that was firefighting every day starts running on process.
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-2)', margin: 0 }}>
               I care about building things that outlast my involvement.
-              Not heroics — <strong style={{ color: 'var(--fg)', fontWeight: 600 }}>systems</strong>.
+              Not heroics. <strong style={{ color: 'var(--fg)', fontWeight: 600 }}>Systems</strong>.
             </p>
           </div>
         </div>
@@ -350,7 +351,7 @@ export default function AboutPage() {
                     background: 'var(--bg-card)', border: '1px solid var(--line)',
                     padding: '2px 8px', borderRadius: 20, letterSpacing: '0.04em',
                   }}>
-                    {e.duration}
+                    {e.tenureStart ? <Tenure start={e.tenureStart} /> : e.duration}
                   </div>
                 </div>
               </div>

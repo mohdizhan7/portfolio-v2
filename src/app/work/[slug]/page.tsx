@@ -112,7 +112,7 @@ function CallInsight() {
         localities, we could deliver where no conventional last-mile network could reach.
       </p>
       <p style={{ fontSize: 14, color: 'var(--fg-3)', lineHeight: 1.65, margin: 0 }}>
-        Standard couriers were being turned back at checkpoints. The access existed — it just
+        Standard couriers were being turned back at checkpoints. The access existed; it just
         wasn&apos;t visible to anyone who hadn&apos;t lived and worked inside those areas.
       </p>
     </div>
@@ -143,7 +143,7 @@ function ExecutionTimeline() {
       label: 'Day 4',
       color: '#f59e0b',
       title: 'Larger parcels & residential addresses',
-      desc: 'Direct calls to recipients — most request RTO; rest approved for security handover. Vegetable and newspaper vendors (already on daily rounds through the same streets) take the residential addresses.',
+      desc: 'Direct calls to recipients: most request RTO, rest approved for security handover. Vegetable and newspaper vendors (already on daily rounds through the same streets) take the residential addresses.',
     },
     {
       label: 'Days 5 – 7',
@@ -254,7 +254,7 @@ function ImpactChart() {
         marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--line)',
         fontSize: 13, color: 'var(--fg-4)', lineHeight: 1.65,
       }}>
-        Some RTO was unavoidable — government offices remained shut. The real comparison
+        Some RTO was unavoidable, since government offices remained shut. The real comparison
         is 70% vs. the alternative: 0%.
       </div>
     </div>

@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { m, useInView, AnimatePresence } from 'framer-motion';
 import { lenisInstance } from '@/lib/lenisInstance';
+import Tenure from '@/components/Tenure';
 
 const jobs = [
   {
@@ -12,17 +13,18 @@ const jobs = [
     title: 'Assistant Project Manager',
     company: 'StackBOX',
     tenure: '2 yr 7 mo',
+    tenureStart: '2023-09-01',
     period: 'Sep 2023 — Present',
     logo: '/SBX Logo_PNG.webp',
-    work: 'Design and implement warehouse and supply chain process solutions for enterprise FMCG clients including P&G, ITC, and Nestlé across India and the Philippines. Own the full project lifecycle — requirement discovery, BRD documentation, system configuration validation, UAT coordination, and go-live stabilisation. Work closely with product, engineering, and automation vendor teams to ensure solutions are operationally ready before deployment.',
+    work: 'Design and implement warehouse and supply chain process solutions for enterprise FMCG clients including P&G, ITC, and Nestlé across India and the Philippines. Own the full project lifecycle: requirement discovery, BRD documentation, system configuration validation, UAT coordination, and go-live stabilisation. Work closely with product, engineering, and automation vendor teams to ensure solutions are operationally ready before deployment.',
     bullets: [
-      'Supported multi-warehouse WMS go-lives for P&G, ITC, and Nestlé — stabilising operations during critical launch phases across India and the Philippines',
+      'Supported multi-warehouse WMS go-lives for P&G, ITC, and Nestlé, stabilising operations during critical launch phases across India and the Philippines',
       'Led HUL Samadhan automation project end-to-end: UAT across conveyors, sensors, PTL systems, Spring Logic configuration, and WES monitoring',
-      'Implemented optimised pick path workflows and system-guided task allocation — ~25% warehouse productivity uplift, 30% faster fulfillment cycle time',
+      'Implemented optimised pick path workflows and system-guided task allocation, delivering ~25% warehouse productivity uplift and 30% faster fulfillment cycle time',
       'Developed KPI dashboards and operational monitoring frameworks using Tableau and Metabase for warehouse performance visibility and SLA adherence',
-      'Coordinated cross-functional stakeholders — product teams, automation vendors, and client leadership — ensuring implementation readiness at every stage',
+      'Coordinated cross-functional stakeholders across product teams, automation vendors, and client leadership, ensuring implementation readiness at every stage',
       'Currently leading nationwide PTL rollout across 50+ Philippines sites: warehouse layout design, PTL hardware planning, infrastructure and manpower calculations, and WMS implementation',
-      'Managing Philippines implementation partner network — creating training manuals, delivering system and process training to consultants, and supervising day-to-day rollout activities',
+      'Managing Philippines implementation partner network: creating training manuals, delivering system and process training to consultants, and supervising day-to-day rollout activities',
     ],
     highlightLabel: 'Currently',
     highlight: 'Sole implementation lead for a nationwide PTL rollout across 50+ sites in the Philippines. Managing vendor coordination, partner training, remote commissioning, and WMS go-live for a major pharmaceutical client.',
@@ -32,16 +34,17 @@ const jobs = [
     title: 'Manager, Solution Design',
     company: 'Edgistify',
     tenure: '1 yr 1 mo',
+    tenureStart: '',
     period: 'Aug 2022 — Sep 2023',
     logo: '/Edgistify Logo.webp',
-    work: 'Designed end-to-end logistics and fulfillment solutions for 3PL, FMCG, and e-commerce clients — covering inbound operations, storage optimisation, inventory management, and outbound distribution. Led solution architecture for scalable supply chain networks and developed warehouse network planning models including manpower, infrastructure, and full operational cost modelling. Liaised between clients, sales leads, and the solution design head to scope, present, and finalise proposals.',
+    work: 'Designed end-to-end logistics and fulfillment solutions for 3PL, FMCG, and e-commerce clients, covering inbound operations, storage optimisation, inventory management, and outbound distribution. Led solution architecture for scalable supply chain networks and developed warehouse network planning models including manpower, infrastructure, and full operational cost modelling. Liaised between clients, sales leads, and the solution design head to scope, present, and finalise proposals.',
     bullets: [
-      'Designed nationwide supply chain operating model for a solar panel manufacturer expanding across Tier 2 and Tier 3 cities — including warehouse network design, manpower planning, and last-mile distribution strategy',
+      'Designed nationwide supply chain operating model for a solar panel manufacturer expanding across Tier 2 and Tier 3 cities, including warehouse network design, manpower planning, and last-mile distribution strategy',
       'Developed warehouse network planning models covering infrastructure requirements, manpower sizing, and operational cost modelling for enterprise clients',
       'Utilised advanced Excel and data analysis to simulate operational scenarios, identify efficiency improvements, and support client decision-making',
       'Led process redesign initiatives that improved warehouse productivity and reduced operational bottlenecks across multiple client sites',
       'Enabled 15–20% reduction in operational overhead through WMS process standardisation and workflow automation',
-      'Reviewed performance metrics regularly — identifying improvement opportunities and presenting findings to client and internal stakeholders',
+      'Reviewed performance metrics regularly, identifying improvement opportunities and presenting findings to client and internal stakeholders',
       'Built and presented solution proposals to clients and sales leadership, participating in requirement sessions, system demos, and UAT reviews',
     ],
     highlightLabel: 'Outcome',
@@ -52,35 +55,37 @@ const jobs = [
     title: 'Manager, Procurement & Supply Chain',
     company: 'Mindseed Education',
     tenure: '8 mo',
+    tenureStart: '',
     period: 'Dec 2021 — Aug 2022',
     logo: '/Mindseed Education Overview.webp',
     work: 'Built and led the centralised procurement function for a fast-growing EdTech company operating across 30+ school locations. Managed vendor sourcing, contract negotiations, and supply coordination for infrastructure and operational supplies. Implemented vendor consolidation and centralised planning processes to replace fragmented manual workflows. Introduced reporting systems and cost benchmarks to give senior management clear visibility into procurement spend and efficiency.',
     bullets: [
-      'Managed 45+ vendors — coordinating nationwide procurement and supply chain operations across all school locations',
+      'Managed 45+ vendors, coordinating nationwide procurement and supply chain operations across all school locations',
       'Negotiated supplier contracts achieving ~15% procurement cost savings through strategic sourcing and consolidation',
-      'Implemented vendor consolidation and centralised procurement planning — replacing fragmented manual processes with a unified system',
+      'Implemented vendor consolidation and centralised procurement planning, replacing fragmented manual processes with a unified system',
       'Built real-time Google Sheets inventory tracking and spend dashboard, adopted daily by finance and operations teams',
       'Reduced procurement cycle time from 14 days to 4 days through process standardisation and pre-approved vendor lists',
       'Performed cost analysis and set benchmarks across supply categories to drive continuous cost reduction',
       'Developed and executed procurement strategies across all channels to improve purchasing efficiency and control',
     ],
     highlightLabel: 'Outcome',
-    highlight: '~15% procurement cost savings in 8 months. Procurement cycle time cut from 14 days to 4. Centralised planning scaled with the business — no more firefighting.',
+    highlight: '~15% procurement cost savings in 8 months. Procurement cycle time cut from 14 days to 4. Centralised planning scaled with the business. No more firefighting.',
   },
   {
     id: 'dtdc',
     title: 'Branch Manager',
     company: 'DTDC Express',
     tenure: '2 yr',
+    tenureStart: '',
     period: 'Jan 2020 — Dec 2021',
     logo: '/DTDC Express Limited Logo.webp',
-    work: 'Managed one of Mumbai\'s largest DTDC branches — 45,000–60,000 shipments daily, 50 employees, and 70 delivery vehicles. One of the youngest Branch Managers in the DTDC network. Full responsibility for inbound and outbound operations, routing, dispatch planning, SLA adherence, customer escalation management, and P&L ownership. Engaged across three aligned teams — sales, accounts, and operations — to support strategy and execution.',
+    work: 'Managed one of Mumbai\'s largest DTDC branches: 45,000–60,000 shipments daily, 50 employees, and 70 delivery vehicles. One of the youngest Branch Managers in the DTDC network. Full responsibility for inbound and outbound operations, routing, dispatch planning, SLA adherence, customer escalation management, and P&L ownership. Engaged across three aligned teams (sales, accounts, and operations) to support strategy and execution.',
     bullets: [
-      'Led 50 employees and 70 delivery vehicles — maintained 95–98% on-time delivery, 90–95% first-attempt success, and <0.5% damage rate',
+      'Led 50 employees and 70 delivery vehicles, maintaining 95–98% on-time delivery, 90–95% first-attempt success, and <0.5% damage rate',
       'Cleared 150,000 shipment backlog in 7 days during COVID by building an alternative last-mile delivery network from scratch in 48 hours',
-      'Optimised routing, dispatch planning, and workflows — reducing delivery delays and improving throughput across the hub',
+      'Optimised routing, dispatch planning, and workflows, reducing delivery delays and improving throughput across the hub',
       'Implemented 5S and RCA (Root Cause Analysis) processes to proactively address operational issues before they escalated',
-      'Assessed employee performance and developed improvement plans — maintaining team productivity under high-pressure conditions',
+      'Assessed employee performance and developed improvement plans, maintaining team productivity under high-pressure conditions',
       'Resolved escalated customer issues and improved service levels by 20% through targeted operational interventions',
       'Recognised as one of the youngest Branch Managers in the DTDC network for managing a high-volume logistics hub',
     ],
@@ -265,7 +270,7 @@ function WorkModal({ job, onClose }: { job: Job; onClose: () => void }) {
               background: 'var(--bg-card)', border: '1px solid var(--line)',
               padding: '3px 8px', borderRadius: 20, letterSpacing: '0.04em',
             }}>
-              {job.tenure}
+              {job.tenureStart ? <Tenure start={job.tenureStart} /> : job.tenure}
             </span>
           </div>
 
@@ -358,8 +363,10 @@ function JobCard({ job, index, onOpen }: { job: Job; index: number; onOpen: () =
       <div className="exp__content">
         <div className="exp__header">
           <h3 className="exp__title">{job.title}</h3>
-          <span className="exp__tenure">{job.tenure}</span>
-          <span className="exp__period">{job.period}</span>
+          <div className="exp__meta">
+            <span className="exp__tenure">{job.tenureStart ? <Tenure start={job.tenureStart} /> : job.tenure}</span>
+            <span className="exp__period">{job.period}</span>
+          </div>
         </div>
         <div className="exp__company">{job.company}</div>
 
