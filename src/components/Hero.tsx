@@ -111,7 +111,7 @@ export default function Hero() {
       <div style={{
         maxWidth: 1100, width: '100%', margin: '0 auto',
         position: 'relative', zIndex: 1,
-        paddingTop: 'clamp(140px, 16vw, 230px)',
+        paddingTop: 'clamp(96px, 12vw, 170px)',
         paddingBottom: 'clamp(32px, 4vw, 48px)',
         flex: 1, display: 'flex', flexDirection: 'column',
       }}>
@@ -148,7 +148,7 @@ export default function Hero() {
           letterSpacing: '-0.03em',
           color: 'var(--fg)',
           maxWidth: 900,
-          marginBottom: 'clamp(70px, 8vw, 110px)',
+          marginBottom: 'clamp(36px, 5vw, 64px)',
         }}>
           {/* "Hi, this is" — first to appear */}
           <span className="hero-mask">
@@ -196,7 +196,7 @@ export default function Hero() {
         </div>
 
         {/* ── Skills ticker pinned to bottom ───────────────────────────── */}
-        <div className="ticker-wrapper" style={{ marginTop: 'auto', paddingTop: 'clamp(32px, 5vw, 56px)' }}>
+        <div className="ticker-wrapper" style={{ marginTop: 'auto', paddingTop: 'clamp(16px, 3vw, 28px)' }}>
           <m.div {...fadeUp(0.95)}>
             <SkillsTicker />
           </m.div>

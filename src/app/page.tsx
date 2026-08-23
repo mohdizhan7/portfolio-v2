@@ -7,7 +7,6 @@ import Contact from '@/components/Contact';
 export default function Home() {
   return (
     <>
-      <div className="scroll-bar" />
       <Nav />
       <main>
         <Hero />

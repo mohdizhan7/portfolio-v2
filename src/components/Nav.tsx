@@ -70,10 +70,10 @@ export default function Nav() {
               display: 'flex', gap: 32,
               fontSize: 14, fontWeight: 600, color: fg,
             }}>
-              <Link href="#work"     style={{ color: fg, transition: 'opacity 0.2s' }}>Work</Link>
+              <Link href="/#work"     style={{ color: fg, transition: 'opacity 0.2s' }}>Work</Link>
               <Link href="/about"    style={{ color: fg, transition: 'opacity 0.2s' }}>About</Link>
-              <Link href="#projects" style={{ color: fg, transition: 'opacity 0.2s' }}>Projects</Link>
-              <Link href="#contact"  style={{ color: fg, transition: 'opacity 0.2s' }}>Contact</Link>
+              <Link href="/#projects" style={{ color: fg, transition: 'opacity 0.2s' }}>Projects</Link>
+              <Link href="/#contact"  style={{ color: fg, transition: 'opacity 0.2s' }}>Contact</Link>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ export default function Nav() {
           {(['Work', 'About', 'Projects', 'Contact'] as const).map((label, i) => (
             <Link
               key={label}
-              href={label === 'About' ? '/about' : `#${label.toLowerCase()}`}
+              href={label === 'About' ? '/about' : `/#${label.toLowerCase()}`}
               onClick={() => setMenuOpen(false)}
               style={{
                 fontSize: 'clamp(32px, 9vw, 48px)',

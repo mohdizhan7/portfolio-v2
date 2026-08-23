@@ -31,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={inter.variable}>
       <body style={{ fontFamily: 'var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif' }}>
         <LenisProvider>
+          <div className="scroll-bar" />
           <ScrollProgress />
           {children}
         </LenisProvider>
