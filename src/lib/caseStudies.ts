@@ -9,14 +9,11 @@ export type CaseStudySections = {
 export type CaseStudy = {
   slug: string;
   number: string;
-  icon: string;
   title: string;
   subtitle: string;
   tags: string[];
   cover: string;
   role: string;
-  timeline: string;
-  scale: string;
   metaDescription: string;
   client: string;
   year: string;
@@ -29,14 +26,11 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'ph-rollout',
     number: '01',
-    icon: '🎯',
     title: 'PH Rollout',
     subtitle: 'Multi-warehouse PTL, Philippines',
     tags: ['PTL', 'Training', 'Rollout'],
     cover: '/ph-rollout.webp',
     role: 'Implementation PM',
-    timeline: '2024 — Present',
-    scale: '50+ Sites',
     client: 'StackBOX',
     year: '2024 — Present',
     status: 'In Progress',
@@ -56,14 +50,11 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'hul-samadhan',
     number: '02',
-    icon: '📦',
     title: 'HUL Samadhan',
     subtitle: 'Solo UAT and go-live readiness, zero to ready',
     tags: ['WMS', 'UAT', 'PTL/SBL'],
     cover: '/hul-samadhan.webp',
     role: 'Implementation Lead',
-    timeline: '2024',
-    scale: '1 Site · Vapi',
     client: 'Hindustan Unilever (HUL)',
     year: '2024',
     metrics: [
@@ -82,14 +73,11 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'the-backlog',
     number: '03',
-    icon: '⚡',
     title: 'The Backlog',
     subtitle: 'No playbook. No directive. 150,000 shipments cleared in 7 days.',
     tags: ['Last-Mile', 'Crisis Ops'],
     cover: '/backlog.jpg',
     role: 'Acting Ops Lead',
-    timeline: 'June 2020',
-    scale: '150,000 shipments',
     client: 'DTDC Express',
     year: '2020',
     metrics: [
