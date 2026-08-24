@@ -76,7 +76,7 @@ export const caseStudies: CaseStudy[] = [
     title: 'The Backlog',
     subtitle: 'No playbook. No directive. 150,000 shipments cleared in 7 days.',
     tags: ['Last-Mile', 'Crisis Ops'],
-    cover: '/backlog.jpg',
+    cover: '/backlog.webp',
     role: 'Acting Ops Lead',
     client: 'DTDC Express',
     year: '2020',
