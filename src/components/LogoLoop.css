@@ -5,16 +5,6 @@
   --logoloop-fadeColorAuto: #e8e8e4;
 }
 
-.logoloop--vertical {
-  height: 100%;
-  display: inline-block;
-}
-
-.logoloop--scale-hover {
-  padding-top: calc(var(--logoloop-logoHeight) * 0.1);
-  padding-bottom: calc(var(--logoloop-logoHeight) * 0.1);
-}
-
 .logoloop__track {
   display: flex;
   width: max-content;
@@ -24,19 +14,9 @@
   z-index: 0;
 }
 
-.logoloop--vertical .logoloop__track {
-  flex-direction: column;
-  height: max-content;
-  width: 100%;
-}
-
 .logoloop__list {
   display: flex;
   align-items: center;
-}
-
-.logoloop--vertical .logoloop__list {
-  flex-direction: column;
 }
 
 .logoloop__item {
@@ -46,18 +26,8 @@
   line-height: 1;
 }
 
-.logoloop--vertical .logoloop__item {
-  margin-right: 0;
-  margin-bottom: var(--logoloop-gap);
-}
-
 .logoloop__item:last-child {
   margin-right: var(--logoloop-gap);
-}
-
-.logoloop--vertical .logoloop__item:last-child {
-  margin-right: 0;
-  margin-bottom: var(--logoloop-gap);
 }
 
 .logoloop__node {
@@ -72,20 +42,6 @@
   object-fit: contain;
   -webkit-user-drag: none;
   pointer-events: none;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logoloop--scale-hover .logoloop__item {
-  overflow: visible;
-}
-
-.logoloop--scale-hover .logoloop__item:hover img,
-.logoloop--scale-hover .logoloop__item:hover .logoloop__node {
-  transform: scale(1.1);
-  transform-origin: center center;
-}
-
-.logoloop--scale-hover .logoloop__node {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -117,20 +73,12 @@
 
 .logoloop--fade::before {
   left: 0;
-  background: linear-gradient(
-    to right,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to right, var(--logoloop-fadeColorAuto) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .logoloop--fade::after {
   right: 0;
-  background: linear-gradient(
-    to left,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to left, var(--logoloop-fadeColorAuto) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -21,16 +21,12 @@ interface LogoLoopProps {
   logos: LogoItem[];
   /** px/s — higher = faster */
   speed?: number;
-  direction?: 'left' | 'right' | 'up' | 'down';
   pauseOnHover?: boolean;
-  scaleOnHover?: boolean;
   fade?: boolean;
   /** Override CSS var --logoloop-gap (px) */
   gap?: number;
   /** Override CSS var --logoloop-logoHeight (px) */
   logoHeight?: number;
-  /** Override fade gradient color */
-  fadeColor?: string;
   style?: CSSProperties;
   className?: string;
 }
@@ -40,13 +36,10 @@ interface LogoLoopProps {
 export default function LogoLoop({
   logos,
   speed = 50,
-  direction = 'left',
   pauseOnHover = true,
-  scaleOnHover = false,
   fade = true,
   gap,
   logoHeight,
-  fadeColor,
   style,
   className = '',
 }: LogoLoopProps) {
@@ -56,9 +49,6 @@ export default function LogoLoop({
   const rafRef = useRef<number>(0);
   const pausedRef = useRef(false);
   const lastTimeRef = useRef<number | null>(null);
-
-  const isVertical = direction === 'up' || direction === 'down';
-  const isReverse = direction === 'right' || direction === 'down';
 
   // Duplicate logos for seamless loop
   const items = [...logos, ...logos];
@@ -70,33 +60,24 @@ export default function LogoLoop({
 
     if (!pausedRef.current && trackRef.current) {
       const track = trackRef.current;
-      const totalSize = isVertical
-        ? track.scrollHeight / 2
-        : track.scrollWidth / 2;
+      const totalWidth = track.scrollWidth / 2;
 
-      if (totalSize === 0) {
+      if (totalWidth === 0) {
         rafRef.current = requestAnimationFrame(animate);
         return;
       }
 
       const step = (speed * delta) / 1000;
-      posRef.current = isReverse
-        ? posRef.current - step
-        : posRef.current + step;
+      posRef.current += step;
 
       // Wrap around at the half-point so it loops seamlessly
-      if (!isReverse && posRef.current >= totalSize) posRef.current -= totalSize;
-      if (isReverse && posRef.current <= -totalSize) posRef.current += totalSize;
+      if (posRef.current >= totalWidth) posRef.current -= totalWidth;
 
-      const translate = isVertical
-        ? `translate3d(0, ${isReverse ? posRef.current : -posRef.current}px, 0)`
-        : `translate3d(${isReverse ? posRef.current : -posRef.current}px, 0, 0)`;
-
-      track.style.transform = translate;
+      track.style.transform = `translate3d(${-posRef.current}px, 0, 0)`;
     }
 
     rafRef.current = requestAnimationFrame(animate);
-  }, [speed, isVertical, isReverse]);
+  }, [speed]);
 
   useEffect(() => {
     rafRef.current = requestAnimationFrame(animate);
@@ -106,8 +87,6 @@ export default function LogoLoop({
   // Build class names
   const classes = [
     'logoloop',
-    isVertical ? 'logoloop--vertical' : '',
-    scaleOnHover ? 'logoloop--scale-hover' : '',
     fade ? 'logoloop--fade' : '',
     className,
   ].filter(Boolean).join(' ');
@@ -116,7 +95,6 @@ export default function LogoLoop({
   const cssVars: CSSProperties = {
     ...(gap !== undefined && { '--logoloop-gap': `${gap}px` } as CSSProperties),
     ...(logoHeight !== undefined && { '--logoloop-logoHeight': `${logoHeight}px` } as CSSProperties),
-    ...(fadeColor !== undefined && { '--logoloop-fadeColor': fadeColor } as CSSProperties),
   };
 
   return (

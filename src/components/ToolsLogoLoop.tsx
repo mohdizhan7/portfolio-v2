@@ -156,7 +156,6 @@ export default function ToolsLogoLoop() {
       <LogoLoop
         logos={TOOLS}
         speed={40}
-        direction="left"
         pauseOnHover
         fade={false}
         logoHeight={44}
