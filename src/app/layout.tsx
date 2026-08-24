@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
 import ScrollProgress from '@/components/ScrollProgress';
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ScrollProgress />
           {children}
         </LenisProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
