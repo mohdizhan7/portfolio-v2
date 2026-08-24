@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
@@ -12,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://mohmmedizhan.com'),
   title: 'Mohammed Izhan Shaikh — Supply Chain Project Manager',
   description: 'Senior Project & KAM professional specialising in supply chain, warehouse ops, and last-mile delivery at scale.',
   authors: [{ name: 'Mohammed Izhan Shaikh' }],
@@ -24,6 +25,12 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     type: 'website',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#e8e8e4',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
