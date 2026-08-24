@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import NavCaseStudy from '@/components/NavCaseStudy';
@@ -26,12 +27,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const SECTIONS = [
-  { number: '01', title: 'The Situation', key: 'situation' as const },
-  { number: '02', title: 'The Call',      key: 'call'      as const },
-  { number: '03', title: 'The Execution', key: 'execution' as const },
-  { number: '04', title: 'The Impact',    key: 'impact'    as const },
-  { number: '05', title: 'The Lesson',    key: 'lesson'    as const },
+type SectionKey = 'situation' | 'call' | 'execution' | 'impact' | 'lesson';
+
+const SECTIONS: { number: string; title: string; key: SectionKey }[] = [
+  { number: '01', title: 'The Situation', key: 'situation' },
+  { number: '02', title: 'The Call',      key: 'call'      },
+  { number: '03', title: 'The Execution', key: 'execution' },
+  { number: '04', title: 'The Impact',    key: 'impact'    },
+  { number: '05', title: 'The Lesson',    key: 'lesson'    },
 ];
 
 /* ── Backlog visual components ──────────────────────────────────────── */
@@ -261,6 +264,17 @@ function ImpactChart() {
   );
 }
 
+/* ── Per-case-study section visuals ─────────────────────────────────── */
+
+const CASE_STUDY_VISUALS: Record<string, Partial<Record<SectionKey, { side?: ReactNode; bottom?: ReactNode }>>> = {
+  'the-backlog': {
+    situation: { side: <SituationMetrics /> },
+    call:      { side: <CallInsight /> },
+    execution: { bottom: <ExecutionTimeline /> },
+    impact:    { side: <ImpactChart /> },
+  },
+};
+
 /* ── Page ───────────────────────────────────────────────────────────── */
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -270,7 +284,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   const currentIndex = caseStudies.findIndex(c => c.slug === cs.slug);
   const related = caseStudies.filter((_, i) => i !== currentIndex).slice(0, 2);
-  const isBacklog = cs.slug === 'the-backlog';
 
   const metaItems: [string, string][] = [
     ['Company', cs.client],
@@ -299,18 +312,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         const text = cs.sections[s.key];
         const paragraphs = text.split('\n\n').filter(Boolean);
 
-        // Backlog: sections that get a side visual (two-column)
-        const hasSideVisual =
-          isBacklog && (s.key === 'situation' || s.key === 'call' || s.key === 'impact');
-        // Backlog: execution gets a full-width timeline below the text
-        const hasBottomTimeline = isBacklog && s.key === 'execution';
-
-        let sideVisual = null;
-        if (isBacklog) {
-          if (s.key === 'situation') sideVisual = <SituationMetrics />;
-          else if (s.key === 'call')  sideVisual = <CallInsight />;
-          else if (s.key === 'impact') sideVisual = <ImpactChart />;
-        }
+        const visual = CASE_STUDY_VISUALS[cs.slug]?.[s.key];
+        const sideVisual = visual?.side;
+        const hasSideVisual = !!sideVisual;
 
         return (
           <section
@@ -381,8 +385,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               </div>
             )}
 
-            {/* Execution phase timeline (Backlog only) */}
-            {hasBottomTimeline && <ExecutionTimeline />}
+            {/* Section-specific full-width visual (e.g. Backlog's execution timeline) */}
+            {visual?.bottom}
           </section>
         );
       })}
