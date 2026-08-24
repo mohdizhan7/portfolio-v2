@@ -11,6 +11,7 @@ import {
   RigidBody,
   useRopeJoint,
   useSphericalJoint,
+  type RapierRigidBody,
 } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
@@ -35,20 +36,33 @@ interface BandProps {
 
 // ─── Band (physics rope + card) ───────────────────────────────────────────────
 
+type CardGLTFResult = {
+  nodes: {
+    card: THREE.Mesh;
+    clip: THREE.Mesh;
+    clamp: THREE.Mesh;
+  };
+  materials: {
+    metal: THREE.Material;
+  };
+};
+
 function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   const band  = useRef<THREE.Mesh>(null!);
-  const fixed = useRef<any>(null!);
-  const j1    = useRef<any>(null!);
-  const j2    = useRef<any>(null!);
-  const j3    = useRef<any>(null!);
-  const card  = useRef<any>(null!);
+  const fixed = useRef<RapierRigidBody>(null!);
+  const j1    = useRef<RapierRigidBody>(null!);
+  const j2    = useRef<RapierRigidBody>(null!);
+  const j3    = useRef<RapierRigidBody>(null!);
+  const card  = useRef<RapierRigidBody>(null!);
+  const j1Lerped = useRef<THREE.Vector3 | null>(null);
+  const j2Lerped = useRef<THREE.Vector3 | null>(null);
 
   const vec = new THREE.Vector3();
   const ang = new THREE.Vector3();
   const rot = new THREE.Vector3();
   const dir = new THREE.Vector3();
 
-  const { nodes, materials } = useGLTF('/card.glb') as any;
+  const { nodes, materials } = useGLTF('/card.glb') as unknown as CardGLTFResult;
   const texture = useTexture('/lanyard.png');
 
   const [curve] = useState(
@@ -98,22 +112,22 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
     }
 
     if (fixed.current) {
-      [j1, j2].forEach(ref => {
-        if (!ref.current.lerped)
-          ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+      ([[j1, j1Lerped], [j2, j2Lerped]] as const).forEach(([bodyRef, lerpedRef]) => {
+        if (!lerpedRef.current)
+          lerpedRef.current = new THREE.Vector3().copy(bodyRef.current.translation());
         const d = Math.max(
           0.1,
-          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+          Math.min(1, lerpedRef.current.distanceTo(bodyRef.current.translation()))
         );
-        ref.current.lerped.lerp(
-          ref.current.translation(),
+        lerpedRef.current.lerp(
+          bodyRef.current.translation(),
           delta * (minSpeed + d * (maxSpeed - minSpeed))
         );
       });
 
       curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(j2.current.lerped);
-      curve.points[2].copy(j1.current.lerped);
+      curve.points[1].copy(j2Lerped.current!);
+      curve.points[2].copy(j1Lerped.current!);
       curve.points[3].copy(fixed.current.translation());
 
       (band.current.geometry as any).setPoints(curve.getPoints(isMobile ? 16 : 32));
@@ -121,7 +135,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
       // Y-rotation is locked via enabledRotations — zero it each frame as belt-and-braces
-      card.current.setAngvel({ x: ang.x, y: 0, z: ang.z });
+      card.current.setAngvel({ x: ang.x, y: 0, z: ang.z }, false);
     }
   });
 
