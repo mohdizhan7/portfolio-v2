@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Lenis from 'lenis';
-import { LazyMotion, domAnimation } from 'framer-motion';
+import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
 import { lenisInstance } from '@/lib/lenisInstance';
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
@@ -32,5 +32,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     };
   }, []);
 
-  return <LazyMotion features={domAnimation} strict>{children}</LazyMotion>;
+  return (
+    <LazyMotion features={domAnimation} strict>
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+    </LazyMotion>
+  );
 }
