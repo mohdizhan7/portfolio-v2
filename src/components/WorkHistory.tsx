@@ -96,6 +96,10 @@ const jobs = [
 
 type Job = typeof jobs[0];
 
+function TenureLabel({ job }: { job: Job }) {
+  return job.tenureStart ? <Tenure start={job.tenureStart} /> : <>{job.tenure}</>;
+}
+
 function WorkModal({ job, onClose }: { job: Job; onClose: () => void }) {
   const [fullScreen, setFullScreen] = useState(false);
 
@@ -270,7 +274,7 @@ function WorkModal({ job, onClose }: { job: Job; onClose: () => void }) {
               background: 'var(--bg-card)', border: '1px solid var(--line)',
               padding: '3px 8px', borderRadius: 20, letterSpacing: '0.04em',
             }}>
-              {job.tenureStart ? <Tenure start={job.tenureStart} /> : job.tenure}
+              <TenureLabel job={job} />
             </span>
           </div>
 
@@ -364,7 +368,7 @@ function JobCard({ job, index, onOpen }: { job: Job; index: number; onOpen: () =
         <div className="exp__header">
           <h3 className="exp__title">{job.title}</h3>
           <div className="exp__meta">
-            <span className="exp__tenure">{job.tenureStart ? <Tenure start={job.tenureStart} /> : job.tenure}</span>
+            <span className="exp__tenure"><TenureLabel job={job} /></span>
             <span className="exp__period">{job.period}</span>
           </div>
         </div>
