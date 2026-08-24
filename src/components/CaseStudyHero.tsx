@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { m, useMotionValue, animate } from 'framer-motion';
 import { getFromData, clearFromData } from '@/lib/transitionStore';
@@ -16,8 +16,7 @@ type Props = {
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function CaseStudyHero({ title, cover, status, number, metaItems }: Props) {
-  const fromRect = typeof window !== 'undefined' ? getFromData() : null;
-  const hasTransition = !!fromRect;
+  const [hasTransition] = useState(() => typeof window !== 'undefined' && !!getFromData());
 
   const clipPath = useMotionValue('inset(0px 0px 0px 0px)');
 
